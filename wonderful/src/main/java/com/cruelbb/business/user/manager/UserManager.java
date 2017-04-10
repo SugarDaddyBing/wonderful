@@ -1,6 +1,6 @@
 package com.cruelbb.business.user.manager;
 
-import com.cruelbb.business.user.model.UUser;
+import com.cruelbb.business.user.po.UUser;
 import com.cruelbb.common.utils.MathUtil;
 
 public class UserManager {

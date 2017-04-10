@@ -2,7 +2,7 @@ package com.cruelbb.core.shiro.token.manager;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.cruelbb.business.user.model.UUser;
+import com.cruelbb.business.user.po.UUser;
 import com.cruelbb.core.shiro.token.ShiroToken;
 
 /**

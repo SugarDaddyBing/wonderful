@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cruelbb.business.user.dao.UserMapper;
-import com.cruelbb.business.user.model.UUser;
+import com.cruelbb.business.user.po.UUser;
 import com.cruelbb.business.user.service.UserService;
 import com.cruelbb.core.dataSource.orm.mybatis.DynamicSqlSessionTemplate;
 

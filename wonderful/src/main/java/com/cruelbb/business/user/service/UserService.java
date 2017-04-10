@@ -1,6 +1,6 @@
 package com.cruelbb.business.user.service;
 
-import com.cruelbb.business.user.model.UUser;
+import com.cruelbb.business.user.po.UUser;
 
 public interface UserService {
 

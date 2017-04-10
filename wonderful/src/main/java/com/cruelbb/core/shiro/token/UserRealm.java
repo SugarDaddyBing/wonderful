@@ -15,7 +15,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cruelbb.business.user.model.UUser;
+import com.cruelbb.business.user.po.UUser;
 import com.cruelbb.business.user.service.UserService;
 
 /**
