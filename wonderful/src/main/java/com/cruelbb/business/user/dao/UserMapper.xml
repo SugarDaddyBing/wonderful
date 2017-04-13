@@ -2,15 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.cruelbb.business.user.dao.UserMapper">
 
-	<sql id="Base_Column_List">
-		id, nickname, email, pswd, create_time, last_login_time,status
-	</sql>
-	<!-- 登录 -->
-	<select id="login" resultType="user">
-		select
-		<include refid="Base_Column_List" />
-		from u_user
-		where email = #{email,jdbcType=VARCHAR} and pswd = #{pswd,jdbcType=VARCHAR}
-	</select>
+  <sql id="Base_Column_List">
+    id, nickname, email, password, createtime, lastlogintime, status, roleid
+  </sql>
+  <!-- 登录 -->
+  <select id="login" resultType="user" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where email = #{0} and password = #{1}
+  </select>
 
+  <!-- 查询角色名 -->
+  <select id="findRolesByEmail" parameterType="string" resultType="string">
+    select r.rolename from role r , user u
+    where
+    r.id = u.roleid and u.email = #{0}
+  </select>
+
+  <select id="findPermissionsByEmail" parameterType="string" resultType="string">
+    select p.permissionname from user u ,
+    role r , permission p
+    where
+    u.roleid = r.id and p.roleid = r.id and u.email = #{0}
+  </select>
 </mapper>

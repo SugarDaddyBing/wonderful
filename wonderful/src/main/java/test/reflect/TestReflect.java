@@ -19,5 +19,7 @@ public class TestReflect {
     Method method = clazz.getMethod("hit", String.class, int.class);
     String info2 = (String) method.invoke(clazz.newInstance(), "xx", 5);
     System.out.println(info2);
+
+
   }
 }

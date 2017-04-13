@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.cruelbb.business.user.po.UUser;
+import com.cruelbb.business.user.po.User;
 import com.cruelbb.core.shiro.token.manager.TokenManager;
 
 /**
@@ -32,7 +32,7 @@ public class UserLoginController {
 	 */
 	@RequestMapping(value = "submitLogin", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> submitLogin(UUser entity, HttpServletRequest request) {
+	public Map<String, Object> submitLogin(User entity, HttpServletRequest request) {
 
 		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
 		try {

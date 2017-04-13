@@ -1,6 +1,6 @@
 package com.cruelbb.business.user.manager;
 
-import com.cruelbb.business.user.po.UUser;
+import com.cruelbb.business.user.po.User;
 import com.cruelbb.common.utils.MathUtil;
 
 public class UserManager {
@@ -24,7 +24,7 @@ public class UserManager {
 	 * @param user
 	 * @return
 	 */
-	public static UUser md5Pswd(UUser user) {
+	public static User md5Pswd(User user) {
 		user.setPswd(md5Pswd(user.getEmail(), user.getPswd()));
 		return user;
 	}

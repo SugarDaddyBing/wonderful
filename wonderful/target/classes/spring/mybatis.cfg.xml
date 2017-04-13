@@ -18,7 +18,7 @@
 
 	<!-- 别名在mubatis中 使用比较方便 -->
 	<typeAliases>
-		<typeAlias type="com.cruelbb.business.user.po.UUser" alias="user" />
+		<typeAlias type="com.cruelbb.business.user.po.User" alias="user" />
 	</typeAliases>
 
 	<plugins>

@@ -1,8 +1,33 @@
 package com.cruelbb.business.user.service;
 
-import com.cruelbb.business.user.po.UUser;
+import java.util.Set;
+
+import com.cruelbb.business.user.po.User;
 
 public interface UserService {
 
-	UUser login(String email, String pswd);
+  /**
+   * 登录
+   *
+   * @param email
+   * @param pswd
+   * @return UUser
+   */
+  User login(String email, String pswd);
+
+  /**
+   * 根据email得到rolename
+   *
+   * @param email
+   * @return
+   */
+  Set<String> findRolesByEmail(String email);
+
+  /**
+   * 根据email得到权限
+   *
+   * @param email
+   * @return
+   */
+  Set<String> findPermissionsByEmail(String email);
 }
