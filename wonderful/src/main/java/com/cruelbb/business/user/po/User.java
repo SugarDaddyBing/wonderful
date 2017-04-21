@@ -17,11 +17,11 @@ public class User implements Serializable {
    */
   private static final long serialVersionUID = -3554603888209177826L;
 
-  // 0:禁止登录
-  public static final Long _0 = new Long(0);
+  // 禁止登录
+  public static final int BAN = 0;
 
-  // 1:有效
-  public static final Long _1 = new Long(1);
+  // 有效
+  public static final int PERMMIT = 1;
 
   private String id;
 
@@ -41,7 +41,7 @@ public class User implements Serializable {
   private Date lastLoginTime;
 
   /** 1:有效，0:禁止登录 */
-  private Long status;
+  private int status;
 
   /* 对应的角色id */
   private int roleid;
@@ -69,11 +69,11 @@ public class User implements Serializable {
     return email;
   }
 
-  public Long getStatus() {
+  public int getStatus() {
     return status;
   }
 
-  public void setStatus(Long status) {
+  public void setStatus(int status) {
     this.status = status;
   }
 

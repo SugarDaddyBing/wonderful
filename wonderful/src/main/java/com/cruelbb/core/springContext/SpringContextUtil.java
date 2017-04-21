@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * 这个你懂的就是个spring的上下管理工具
+ * 这个你懂的就是个spring的上下文管理工具
  *
  * @author wangbingyuan
  *

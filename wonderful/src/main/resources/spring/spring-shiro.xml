@@ -42,8 +42,10 @@
     <property name="filterChainDefinitions">
       <value>
         <!-- /** = anon -->
+        /static/** = anon
         /login.html = anon
-        /home.html = authc
+        /submitLogin.do = anon
+        /** = authc
 
         /v3.html = roles[V3]
         /v3.html = perms["user:create"]

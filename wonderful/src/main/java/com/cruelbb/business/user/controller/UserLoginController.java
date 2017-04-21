@@ -5,11 +5,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cruelbb.business.common.annotation.MyA;
 import com.cruelbb.business.user.po.User;
 import com.cruelbb.core.shiro.token.manager.TokenManager;
 
@@ -22,27 +24,30 @@ import com.cruelbb.core.shiro.token.manager.TokenManager;
 @Controller
 public class UserLoginController {
 
-	/**
-	 * 登陆提交
-	 *
-	 * @param entity
-	 * @param remeberMe
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "submitLogin", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> submitLogin(User entity, HttpServletRequest request) {
+  /**
+   * 登陆提交
+   *
+   * @param entity
+   * @param remeberMe
+   * @param request
+   * @return
+   */
+  @MyA("登录成功")
+  @RequestMapping(value = "submitLogin", method = RequestMethod.POST)
+  @ResponseBody
+  public Map<String, Object> submitLogin(User entity, HttpServletRequest request) {
 
-		Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
-		try {
-			entity = TokenManager.login(entity);
-			resultMap.put("status", 200);
-			resultMap.put("message", "登陆成功");
-		} catch (Exception e) {
-			resultMap.put("status", 500);
-			resultMap.put("message", "账号或密码错误");
-		}
-		return resultMap;
-	}
+    Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
+    try {
+      entity = TokenManager.login(entity);
+      resultMap.put("status", 200);
+      resultMap.put("message", "登陆成功");
+    } catch (UnknownAccountException e) {
+      resultMap.put("status", 500);
+      resultMap.put("message", "账号或密码错误");
+    } catch (Exception e) {
+
+    }
+    return resultMap;
+  }
 }

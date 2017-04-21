@@ -14,20 +14,17 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private DynamicSqlSessionTemplate DynamicSqlSessionTemplate;
 
-  /**
-   * 登录
-   */
-  public User login(String email, String pswd) {
+  public User validateByusernameAndPwd(String email, String pswd) {
     return DynamicSqlSessionTemplate.getMapper(UserMapper.class).login(email, pswd);
   }
 
   @Override
-  public Set<String> findRolesByEmail(String email) {
+  public Set<String> findRolesByUsername(String email) {
     return DynamicSqlSessionTemplate.getMapper(UserMapper.class).findRolesByEmail(email);
   }
 
   @Override
-  public Set<String> findPermissionsByEmail(String email) {
+  public Set<String> findPermissionsByUsername(String email) {
     return DynamicSqlSessionTemplate.getMapper(UserMapper.class).findPermissionsByEmail(email);
   }
 

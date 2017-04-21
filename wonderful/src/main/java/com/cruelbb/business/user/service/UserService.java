@@ -4,30 +4,36 @@ import java.util.Set;
 
 import com.cruelbb.business.user.po.User;
 
+/**
+ * 用户相关service
+ *
+ * @author wangbingyuan
+ */
 public interface UserService {
 
   /**
-   * 登录
+   * 通过username，pwd获得user信息
    *
-   * @param email
+   * @param username
    * @param pswd
    * @return UUser
    */
-  User login(String email, String pswd);
+  User validateByusernameAndPwd(String username, String pswd);
 
   /**
    * 根据email得到rolename
    *
    * @param email
-   * @return
+   *        email
+   * @return set集合
    */
-  Set<String> findRolesByEmail(String email);
+  Set<String> findRolesByUsername(String email);
 
   /**
    * 根据email得到权限
    *
    * @param email
-   * @return
+   * @return set集合
    */
-  Set<String> findPermissionsByEmail(String email);
+  Set<String> findPermissionsByUsername(String email);
 }
