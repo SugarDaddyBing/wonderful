@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title></title>
+<link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all" />
+<link href="/static//plugins/jqGrid/css/ui.jqgrid.css" rel="stylesheet">
+</head>
+
+<body>
+  <div class="jqGrid_wrapper">
+    <table id="jqGrid"></table>
+  </div>
+  <script type="text/javascript" src="/static/plugins/vue.min.js"></script>
+  <script type="text/javascript" src="/static/plugins/layui/layui.js"></script>
+  <script type="text/javascript" src="/static/plugins/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/plugins/jqGrid/js/jquery.jqGrid.min.js"></script>
+  <script type="text/javascript" src="/static/js/globaljs.js"></script>
+  <script>
+			layui.use([ 'form' ], function() {
+				var form = layui.form;
+				window.form = layui.form;
+			});
+
+			$(function() {
+				$("#jqGrid").jqGrid({
+					url : '/user/manage/list.do',
+					colModel : [ {
+						label : '用户ID',
+						name : 'userid',
+						hidden : true,
+						key : true
+					}, {
+						label : '用户名',
+						name : 'username',
+						width : 75
+					}, {
+						label : '昵称',
+						name : 'nickname',
+						width : 75
+					}, {
+						label : '角色',
+						name : 'role',
+						width : 75
+					}, {
+						label : '权限',
+						name : 'permission',
+						width : 75
+					} ]
+				});
+			});
+		</script>
+</body>
+
+</html>

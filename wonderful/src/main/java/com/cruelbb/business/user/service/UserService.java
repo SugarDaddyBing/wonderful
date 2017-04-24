@@ -1,8 +1,11 @@
 package com.cruelbb.business.user.service;
 
+import java.util.List;
 import java.util.Set;
 
+import com.cruelbb.business.user.bo.UserRolePerm;
 import com.cruelbb.business.user.po.User;
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 /**
  * 用户相关service
@@ -36,4 +39,12 @@ public interface UserService {
    * @return set集合
    */
   Set<String> findPermissionsByUsername(String email);
+
+  /**
+   * 通过用户名查询用户详细信息
+   *
+   * @param email
+   * @return UserRolePerm
+   */
+  List<UserRolePerm> getURPByUsername(String email);
 }

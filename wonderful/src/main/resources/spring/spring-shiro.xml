@@ -46,9 +46,6 @@
         /login.html = anon
         /submitLogin.do = anon
         /** = authc
-
-        /v3.html = roles[V3]
-        /v3.html = perms["user:create"]
       </value>
     </property>
   </bean>

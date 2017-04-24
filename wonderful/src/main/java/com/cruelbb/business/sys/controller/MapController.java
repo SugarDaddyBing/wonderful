@@ -1,6 +1,7 @@
 package com.cruelbb.business.sys.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -11,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MapController {
 
-
-  @RequestMapping(value = "v3")
-  public String v3() {
-    return "user/v3";
+  /**
+   * index页面map
+   *
+   * @param url
+   * @return view
+   */
+  @RequestMapping("/user/{url}")
+  public String indexMap(@PathVariable("url") String url) {
+    return "user/" + url;
   }
-
 }

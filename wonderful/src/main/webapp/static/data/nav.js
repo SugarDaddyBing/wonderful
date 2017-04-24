@@ -5,11 +5,11 @@ var navs = [ {
 	"children" : [ {
 		"title" : "在线用户",
 		"icon" : "fa fa-wifi",
-		"href" : "button.html"
+		"href" : "/user/online.page"
 	}, {
 		"title" : "用户权限",
 		"icon" : "&#xe63c;",
-		"href" : "form.html"
+		"href" : "/user/roleandperms.page"
 	} ]
 }, {
 	"title" : "业务",
