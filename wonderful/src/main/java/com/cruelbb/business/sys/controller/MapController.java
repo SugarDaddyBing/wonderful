@@ -1,5 +1,7 @@
 package com.cruelbb.business.sys.controller;
 
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,8 @@ public class MapController {
    * @param url
    * @return view
    */
+  // @RequiresPermissions("user:del")
+  @RequiresRoles(value = {"管理员", "V3"}, logical = Logical.OR)
   @RequestMapping("/user/{url}")
   public String indexMap(@PathVariable("url") String url) {
     return "user/" + url;

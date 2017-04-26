@@ -9,6 +9,11 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+  <!-- 开启注解 -->
+  <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor" />
+  <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    <property name="securityManager" ref="securityManager" />
+  </bean>
 
   <!-- 安全管理器 -->
   <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
@@ -49,4 +54,27 @@
       </value>
     </property>
   </bean>
+
+  <!-- Shiro生命周期处理器 -->
+  <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+
+  <!-- 支持 Shiro对Controller的方法级AOP安全控制 -->
+  <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+    <property name="proxyTargetClass" value="true" />
+  </bean>
+
+  <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    <property name="securityManager" ref="securityManager" />
+  </bean>
+
+  <!-- 将Controller抛出的异常转到特定View -->
+  <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <property name="exceptionMappings">
+      <props>
+        <prop key="org.apache.shiro.authz.UnauthorizedException">403</prop>
+        <prop key="java.lang.Throwable">500</prop>
+      </props>
+    </property>
+  </bean>
+
 </beans>

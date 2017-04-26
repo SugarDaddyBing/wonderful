@@ -31,7 +31,7 @@
 
   <!-- 查询权限名 -->
   <select id="findPermissionsByUsername" parameterType="string" resultType="string">
-    select p. from user u ,
+    select p.permissionname from user u ,
     role r ,
     permission p
     where
@@ -39,15 +39,15 @@
   </select>
 
   <!-- 通过用户名得到用户的详细信息 -->
-  <select id="getURPByUsername" resultType="com.cruelbb.business.user.bo.UserRolePerm"  >
+  <select id="getURPByUsername" resultType="com.cruelbb.business.user.bo.UserRolePerm">
     select
     <include refid="URP_Column"></include>
     from user U , role R , permission P
     <where>
       U.roleid = R.id and P.roleid = R.id
-
-        and U.email = #{email}
-
+      <if test="email !=null">
+        and U.email like concat('%',#{email},'%')
+      </if>
     </where>
   </select>
 </mapper>

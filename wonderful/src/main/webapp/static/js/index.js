@@ -18,13 +18,13 @@ layui.config({
         //	tipMsg: '只能开5个哇，不能再开了。真的。'
         //},
         contextMenu: true,
-        onSwitch: function (data) {
-            console.log(data.id); //当前Tab的Id
-            console.log(data.index); //得到当前Tab的所在下标
-            console.log(data.elem); //得到当前的Tab大容器
-
-            console.log(tab.getCurrentTabId())
-        }
+//        onSwitch: function (data) {
+//            console.log(data.id); //当前Tab的Id
+//            console.log(data.index); //得到当前Tab的所在下标
+//            console.log(data.elem); //得到当前的Tab大容器
+//
+//            console.log(tab.getCurrentTabId())
+//        }
     });
     //iframe自适应
     $(window).on('resize', function () {

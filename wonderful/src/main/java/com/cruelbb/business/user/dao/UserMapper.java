@@ -1,8 +1,7 @@
 package com.cruelbb.business.user.dao;
 
 import java.util.List;
-import java.util.Set;
-
+import java.util.Map;
 import com.cruelbb.business.user.bo.UserRolePerm;
 import com.cruelbb.business.user.po.User;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -21,23 +20,24 @@ public interface UserMapper {
    * 通过用户名查找role
    *
    * @param email
-   * @return Set<String>
+   * @return role名
    */
-  Set<String> findRolesByUsername(String email);
+  String findRolesByUsername(String email);
 
   /**
    * 通过用户名查找permission
    *
    * @param email
-   * @return Set<String>
+   * @return permissionname权限名
    */
-  Set<String> findPermissionsByUsername(String email);
+  String findPermissionsByUsername(String email);
 
   /**
    * 通过用户名查询用户详细信息
    *
-   * @param email
+   * @param params
+   *        pageBounds
    * @return List<UserRolePerm>
    */
-  List<UserRolePerm> getURPByUsername(String email);
+  List<UserRolePerm> getURPByUsername(Map<String, Object> params, PageBounds pageBounds);
 }

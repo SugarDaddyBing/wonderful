@@ -1,6 +1,9 @@
 package com.cruelbb.business.user.service.impl;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +26,24 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public Set<String> findRolesByUsername(String email) {
-    return DynamicSqlSessionTemplate.getMapper(UserMapper.class).findRolesByUsername(email);
+    String rolenameString = DynamicSqlSessionTemplate.getMapper(UserMapper.class).findRolesByUsername(email);
+    Set<String> rolenameSet = new HashSet<String>();
+    rolenameSet.add(rolenameString);
+    return rolenameSet;
   }
 
   @Override
   public Set<String> findPermissionsByUsername(String email) {
-    return DynamicSqlSessionTemplate.getMapper(UserMapper.class).findPermissionsByUsername(email);
+    String permissionString = DynamicSqlSessionTemplate.getMapper(UserMapper.class).findPermissionsByUsername(email);
+    Set<String> permSet = new HashSet<String>();
+    List<String> permList = Arrays.asList(permissionString.split(","));
+    permSet.addAll(permList);
+    return permSet;
   }
 
   @Override
-  public List<UserRolePerm> getURPByUsername(String email)  {
-    return DynamicSqlSessionTemplate.getMapper(UserMapper.class).getURPByUsername(email);
+  public List<UserRolePerm> getURPByUsername(Map<String, Object> map, PageBounds pageBounds) {
+    return DynamicSqlSessionTemplate.getMapper(UserMapper.class).getURPByUsername(map, pageBounds);
   }
 
 }

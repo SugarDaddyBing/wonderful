@@ -1,6 +1,7 @@
 package com.cruelbb.business.user.service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.cruelbb.business.user.bo.UserRolePerm;
@@ -43,8 +44,8 @@ public interface UserService {
   /**
    * 通过用户名查询用户详细信息
    *
-   * @param email
+   * @param map
    * @return UserRolePerm
    */
-  List<UserRolePerm> getURPByUsername(String email);
+  List<UserRolePerm> getURPByUsername(Map<String, Object> map, PageBounds pageBounds);
 }

@@ -5,17 +5,21 @@
 <meta charset="UTF-8">
 <title></title>
 <link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="all" />
-<link href="/static//plugins/jqGrid/css/ui.jqgrid.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/plugins/css/bootstrap.min.css" />
+<link href="/static/plugins/jqGrid/css/ui.jqgrid.css" rel="stylesheet">
 </head>
 
 <body>
   <div class="jqGrid_wrapper">
     <table id="jqGrid"></table>
+    <div id="jqGridPager"></div>
   </div>
+
   <script type="text/javascript" src="/static/plugins/vue.min.js"></script>
   <script type="text/javascript" src="/static/plugins/layui/layui.js"></script>
   <script type="text/javascript" src="/static/plugins/jquery.min.js"></script>
   <script type="text/javascript" src="/static/plugins/jqGrid/js/jquery.jqGrid.min.js"></script>
+   <script type="text/javascript" src="/static/plugins/jqGrid/js/i18n/grid.locale-cn.js"></script>
   <script type="text/javascript" src="/static/js/globaljs.js"></script>
   <script>
 			layui.use([ 'form' ], function() {
@@ -28,12 +32,12 @@
 					url : '/user/manage/list.do',
 					colModel : [ {
 						label : '用户ID',
-						name : 'userid',
+						name : 'roleid',
 						hidden : true,
 						key : true
 					}, {
 						label : '用户名',
-						name : 'username',
+						name : 'email',
 						width : 75
 					}, {
 						label : '昵称',
@@ -41,14 +45,15 @@
 						width : 75
 					}, {
 						label : '角色',
-						name : 'role',
+						name : 'rolename',
 						width : 75
 					}, {
 						label : '权限',
-						name : 'permission',
+						name : 'permissionname',
 						width : 75
 					} ]
 				});
+
 			});
 		</script>
 </body>

@@ -38,8 +38,8 @@ public class UserRealm extends AuthorizingRealm {
 
     SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
     Set<String> rolename = userService.findRolesByUsername(username);
-    Set<String> permissionname = userService.findPermissionsByUsername(username);
     info.setRoles(rolename);
+    Set<String> permissionname = userService.findPermissionsByUsername(username);
     info.setStringPermissions(permissionname);
     return info;
   }
