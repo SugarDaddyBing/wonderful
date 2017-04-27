@@ -1,5 +1,6 @@
 package com.cruelbb.business.user.bo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,8 +8,15 @@ import java.util.Date;
  *
  * @author wangbingyuan
  */
-public class UserRolePerm {
+public class UserRolePerm implements Serializable {
 
+  /**
+   * serialVersionUID
+   */
+  private static final long serialVersionUID = 1L;
+
+  /** 用户id */
+  private String id;
 
   /** 昵称 */
   private String nickname;
@@ -34,6 +42,14 @@ public class UserRolePerm {
   /** 权限名 */
   private String permissionname;
 
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
   public String getNickname() {
     return nickname;
   }
@@ -54,10 +70,12 @@ public class UserRolePerm {
     return createTime;
   }
 
+  // @JsonFormat(pattern = "yyyy-MM-dd HH：mm：ss", timezone = "GMT + 8")
   public void setCreateTime(Date createTime) {
     this.createTime = createTime;
   }
 
+  // @JsonFormat(pattern = "yyyy-MM-dd HH：mm：ss", timezone = "GMT + 8")
   public Date getLastLoginTime() {
     return lastLoginTime;
   }

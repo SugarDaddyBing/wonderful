@@ -16,6 +16,7 @@ import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 
+//这个restcontroller=responsebody+controller
 @RestController
 @RequestMapping("/user/manage")
 public class UserManageController {

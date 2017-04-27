@@ -8,7 +8,7 @@
   </sql>
 
   <sql id="URP_Column">
-    nickname, email, createtime, lastlogintime, status, U.roleid, rolename,
+    U.id, nickname, email, createtime, lastlogintime, status, U.roleid, rolename,
     permissionname
   </sql>
 
