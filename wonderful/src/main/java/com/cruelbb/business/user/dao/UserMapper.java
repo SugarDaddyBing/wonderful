@@ -2,7 +2,9 @@ package com.cruelbb.business.user.dao;
 
 import java.util.List;
 import java.util.Map;
+
 import com.cruelbb.business.user.bo.UserRolePerm;
+import com.cruelbb.business.user.po.Role;
 import com.cruelbb.business.user.po.User;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
@@ -40,4 +42,11 @@ public interface UserMapper {
    * @return List<UserRolePerm>
    */
   List<UserRolePerm> getURPByUsername(Map<String, Object> params, PageBounds pageBounds);
+
+  /**
+   * 得到所有的角色
+   *
+   * @return List<Role>
+   */
+  List<Role> getRoleList();
 }

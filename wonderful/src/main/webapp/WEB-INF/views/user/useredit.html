@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8"> #parse("globalCss.html")
+	</head>
+
+	<body>
+		<div id="vuearea">
+			<label>{{info.email}}</label>
+			<div class="layui-form-item">
+				<select lay-filter="rolename" class="">
+					<option v-for="role in rolelist" v-bind:value="role.id">{{role.rolename}}</option>
+				</select>
+				<button class="layui-btn layui-btn-normal">更新</button>
+			</div>
+		</div>
+
+		#parse("globalJs.html")
+		<script>
+			layui.use(['form'],
+				function() {
+					var form = layui.form();
+					window.form = layui.form();
+
+					form.on('select(rolename)', function(data) {
+						vm.info.rolename = data.value;
+						vm.file.cityName = data.elem[data.elem.selectedIndex].innerText;
+					});
+				});
+
+			var vm = new Vue({
+				el: '#vuearea',
+				data: {
+					info: {
+						email: '',
+						rolename: '',
+						status: ''
+					},
+					rolelist: {}
+				},
+				methods: {
+					getRolelist: function() {
+						$.get("/user/manage/roleSelect.do", function(r) {
+							debugger;
+							alert(r);
+							vm.rolelist = r.rolelist;
+						}, "json");
+					}
+				},
+				created: function() {
+					this.info = parent.vm.info;
+					this.getRolelist();
+				},
+				updated: function() {
+					try {
+						window.form.render();
+					} catch(error) {
+
+					}
+				}
+
+			});
+		</script>
+	</body>
+
+</html>

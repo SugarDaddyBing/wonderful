@@ -23,6 +23,6 @@ public class MapController {
   @RequiresRoles(value = {"管理员", "V3"}, logical = Logical.OR)
   @RequestMapping("/user/{url}")
   public String indexMap(@PathVariable("url") String url) {
-    return "user/" + url;
+    return "user/" + url + ".html";
   }
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cruelbb.business.user.bo.UserRolePerm;
 import com.cruelbb.business.user.dao.UserMapper;
+import com.cruelbb.business.user.po.Role;
 import com.cruelbb.business.user.po.User;
 import com.cruelbb.business.user.service.UserService;
 import com.cruelbb.core.dataSource.orm.mybatis.DynamicSqlSessionTemplate;
@@ -44,6 +45,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<UserRolePerm> getURPByUsername(Map<String, Object> map, PageBounds pageBounds) {
     return DynamicSqlSessionTemplate.getMapper(UserMapper.class).getURPByUsername(map, pageBounds);
+  }
+
+  @Override
+  public List<Role> getRoleList() {
+    return DynamicSqlSessionTemplate.getMapper(UserMapper.class).getRoleList();
   }
 
 }

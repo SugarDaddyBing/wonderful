@@ -50,4 +50,8 @@
       </if>
     </where>
   </select>
+
+  <select id="getRoleList" resultType="com.cruelbb.business.user.po.Role">
+    select id, rolename from role
+  </select>
 </mapper>
