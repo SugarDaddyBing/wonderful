@@ -3,8 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>用户管理</title>
-		#parse("globalCss.html")
+		<title>用户管理</title> #parse("globalCss.html")
 	</head>
 
 	<body>
@@ -34,50 +33,46 @@
 				$("#jqGrid").jqGrid({
 					url: '/user/manage/list.do',
 					colModel: [{
-							label: '用户ID',
-							name: 'id',
-							hidden: true,
-							key: true
-						}, {
-							label: '角色ID',
-							name: 'roleid',
-							hidden: true,
-						}, {
-							label: '用户名',
-							name: 'email',
-							width: 75
-						}, {
-							label: '昵称',
-							name: 'nickname',
-							width: 75
-						}, {
-							label: '角色',
-							name: 'rolename',
-							width: 75
-						}, {
-							label: '权限',
-							name: 'permissionname',
-							width: 75
-						},
-						{
-							label: '状态',
-							name: 'status',
-							width: 75,
-							formatter: function(value, options, row) {
-								return value === 1 ? '<span>正常</span>' : '<span>禁用</span>';
-							}
-						},
-						{
-							label: '创建时间',
-							name: 'createTime',
-							width: 75
-						},
-						{
-							label: '最近登录',
-							name: 'lastLoginTime',
-							width: 75
+						label: '用户ID',
+						name: 'id',
+						hidden: true,
+						key: true
+					}, {
+						label: '角色ID',
+						name: 'roleid',
+						hidden: true,
+					}, {
+						label: '用户名',
+						name: 'email',
+						width: 75
+					}, {
+						label: '昵称',
+						name: 'nickname',
+						width: 75
+					}, {
+						label: '角色',
+						name: 'rolename',
+						width: 75
+					}, {
+						label: '权限',
+						name: 'permissionname',
+						width: 75
+					}, {
+						label: '状态',
+						name: 'status',
+						width: 75,
+						formatter: function(value, options, row) {
+							return value === 1 ? '<span>正常</span>' : '<span>禁用</span>';
 						}
-					]
+					}, {
+						label: '创建时间',
+						name: 'createTime',
+						width: 75
+					}, {
+						label: '最近登录',
+						name: 'lastLoginTime',
+						width: 75
+					}]
 				});
 
 			});
@@ -108,7 +103,8 @@
 						var index = layer.open({
 							title: '编辑',
 							type: 2,
-							content: '/user/useredit.page'
+							content: '/user/useredit.page',
+							area: ['30%', '50%']
 						})
 					},
 					reload: function() {
