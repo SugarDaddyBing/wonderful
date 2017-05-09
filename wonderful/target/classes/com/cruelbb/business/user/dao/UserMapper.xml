@@ -39,7 +39,7 @@
   </select>
 
   <!-- 通过用户名得到用户的详细信息 -->
-  <select id="getURPByUsername" resultType="com.cruelbb.business.user.bo.UserRolePerm">
+  <select id="getURPByUsername" resultType="com.cruelbb.business.user.vo.UserRolePerm">
     select
     <include refid="URP_Column"></include>
     from user U , role R , permission P
@@ -51,7 +51,19 @@
     </where>
   </select>
 
+  <!--角色列表 -->
   <select id="getRoleList" resultType="com.cruelbb.business.user.po.Role">
     select id, rolename from role
   </select>
+
+  <!--更新用户表user -->
+  <update id="updateUser" parameterType="com.cruelbb.business.user.vo.UserVo">
+    UPDATE `user`
+    <set>
+      <if test="nickname != null and nickname.trim() != ''">nickname = #{nickname},</if>
+      <if test="status != null">status = #{status},</if>
+      <if test="roleid != null">roleid = #{roleid}</if>
+    </set>
+    WHERE email = #{email}
+  </update>
 </mapper>

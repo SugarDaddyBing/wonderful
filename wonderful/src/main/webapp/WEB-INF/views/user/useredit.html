@@ -2,69 +2,91 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-#parse("globalCss.html")
+	<meta charset="UTF-8"> #parse("globalCss.html")
 </head>
 
 <body>
-  <form class="layui-form">
-    <div id="vuearea">
-      <label>{{info.email}}</label>
-      <div class="layui-form-item">
-        <select name="rolename" v-model="info.roleid" lay-filter="rolename">
+	<form class="layui-form">
+		<div id="vuearea">
+			<div class="layui-form-item">
+				<label>{{info.email}}</label>
+			</div>
+
+			<div class="layui-form-item">
+				<select name="rolename" v-model="info.roleid" lay-filter="rolename">
           <option v-for="role in rolelist" :value="role.roleid">{{role.rolename}}</option>
         </select>
-        <button class="layui-btn layui-btn-normal">更新</button>
-      </div>
-      <div class="layui-form-item">
-        <label></label>
-      </div>
-    </div>
-  </form>
-  #parse("globalJs.html")
-  <script>
-			layui.use([ 'form' ], function() {
-				var form = layui.form();
-				window.form = layui.form();
+				<a class="layui-btn layui-btn-normal" @click="saveOrUpdate">更新</a>
+			</div>
 
-				form.on('select(rolename)', function(data) {
-					vm.info.roleid = data.value;
-					vm.info.rolename = data.elem[data.elem.selectedIndex].innerText;
-				});
+			<div class="layui-form-item">
+				<label></label>
+			</div>
+		</div>
+	</form>
+	#parse("globalJs.html")
+	<script>
+		layui.use(['form'], function () {
+			var form = layui.form();
+			window.form = layui.form();
+
+			form.on('select(rolename)', function (data) {
+				vm.info.roleid = data.value;
+				vm.info.rolename = data.elem[data.elem.selectedIndex].innerText;
 			});
+		});
 
-			var vm = new Vue({
-				el : '#vuearea',
-				data : {
-					info : {
-						email : '',
-						rolename : '',
-						roleid : '',
-						status : ''
-					},
-					rolelist : {}
+		var vm = new Vue({
+			el: '#vuearea',
+			data: {
+				info: {
+					email: '',
+					rolename: '',
+					roleid: '',
+					status: ''
 				},
-				methods : {
-					getRolelist : function() {
-						$.get("/user/manage/roleSelect.do", function(r) {
-							vm.rolelist = r.rolelist;
-						}, "json");
-					}
+				rolelist: {}
+			},
+			methods: {
+				getRolelist: function () {
+					$.get("/user/manage/roleSelect.do", function (r) {
+						debugger;
+						vm.rolelist = r.rolelist;
+					}, "json");
 				},
-				created : function() {
-					this.info = parent.vm.info;
-					this.getRolelist();
-				},
-				updated : function() {
-					try {
-						window.form.render();
-					} catch (error) {
-
-					}
+				saveOrUpdate: function () {
+					$.ajax({
+						type: "post",
+						url: "/user/manage/userUpdate.do",
+						data: vm.info, //JSON.stringify(vm.info),
+						dataType: "json",
+						success: function (data) {
+							if (data.code === 0) {
+								alert("操作成功！");
+							} else {
+								alert("操作失败！")
+							}
+						}
+					});
 				}
+			},
+			created: function () {
+				this.info.email = parent.vm.info.email;
+				this.info.rolename = parent.vm.info.rolename;
+				this.info.roleid = parent.vm.info.roleid;
+				this.info.status = 1;
+				this.getRolelist();
+			},
+			updated: function () {
+				try {
+					window.form.render();
+				} catch (error) {
 
-			});
-		</script>
+				}
+			}
+
+		});
+	</script>
 </body>
 
 </html>

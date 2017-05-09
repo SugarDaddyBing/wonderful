@@ -8,11 +8,12 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cruelbb.business.user.bo.UserRolePerm;
 import com.cruelbb.business.user.dao.UserMapper;
 import com.cruelbb.business.user.po.Role;
 import com.cruelbb.business.user.po.User;
 import com.cruelbb.business.user.service.UserService;
+import com.cruelbb.business.user.vo.UserRolePerm;
+import com.cruelbb.business.user.vo.UserVo;
 import com.cruelbb.core.dataSource.orm.mybatis.DynamicSqlSessionTemplate;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
@@ -50,6 +51,12 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<Role> getRoleList() {
     return DynamicSqlSessionTemplate.getMapper(UserMapper.class).getRoleList();
+  }
+
+  @Override
+  public boolean updateUser(UserVo user) {
+    int i = DynamicSqlSessionTemplate.getMapper(UserMapper.class).updateUser(user);
+    return i > 0;
   }
 
 }

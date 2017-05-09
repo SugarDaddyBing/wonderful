@@ -1,10 +1,10 @@
 package com.cruelbb.business.user.controller;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cruelbb.business.common.web.PageIn;
 import com.cruelbb.business.common.web.PageOut;
 import com.cruelbb.business.common.web.R;
-import com.cruelbb.business.user.bo.UserRolePerm;
 import com.cruelbb.business.user.po.Role;
 import com.cruelbb.business.user.service.UserService;
+import com.cruelbb.business.user.vo.UserRolePerm;
+import com.cruelbb.business.user.vo.UserVo;
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -47,9 +48,24 @@ public class UserManageController {
 
   }
 
+  /**
+   * 角色列表支持
+   *
+   * @return
+   */
   @RequestMapping("/roleSelect")
   public R roleSelect() {
     List<Role> rlist = userService.getRoleList();
     return R.ok().put("rolelist", rlist);
+  }
+
+  @RequestMapping("/userUpdate")
+  public R userUpdate(UserVo user) {
+
+    if (userService.updateUser(user)) {
+      return R.ok();
+    } else {
+      return R.error();
+    }
   }
 }

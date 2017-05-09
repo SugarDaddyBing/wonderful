@@ -3,9 +3,10 @@ package com.cruelbb.business.user.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.cruelbb.business.user.bo.UserRolePerm;
 import com.cruelbb.business.user.po.Role;
 import com.cruelbb.business.user.po.User;
+import com.cruelbb.business.user.vo.UserRolePerm;
+import com.cruelbb.business.user.vo.UserVo;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 public interface UserMapper {
@@ -49,4 +50,12 @@ public interface UserMapper {
    * @return List<Role>
    */
   List<Role> getRoleList();
+
+  /**
+   * 更新user
+   *
+   * @param user
+   * @return 受影响行数
+   */
+  int updateUser(UserVo user);
 }

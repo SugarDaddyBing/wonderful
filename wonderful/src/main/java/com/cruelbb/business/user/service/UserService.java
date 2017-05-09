@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.cruelbb.business.user.bo.UserRolePerm;
 import com.cruelbb.business.user.po.Role;
 import com.cruelbb.business.user.po.User;
+import com.cruelbb.business.user.vo.UserRolePerm;
+import com.cruelbb.business.user.vo.UserVo;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 
 /**
@@ -56,4 +57,12 @@ public interface UserService {
    * @return List<Role>
    */
   List<Role> getRoleList();
+
+  /**
+   * 更新user
+   *
+   * @param user
+   * @return boolean
+   */
+  boolean updateUser(UserVo user);
 }

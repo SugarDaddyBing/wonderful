@@ -1,131 +1,134 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title>用户管理</title> #parse("globalCss.html")
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<title>用户管理</title> #parse("globalCss.html")
+</head>
 
-	<body>
-		<div id="func" class="container-fluid">
-			<div class="row">
-				<div class="col-md-2">
-					<input type="text" name="username" placeholder="用户名" class="layui-input" v-model="username" />
-					<button class="layui-btn layui-btn-normal" @click="query">查询</button>
-					<button class="layui-btn layui-btn-normal" @click="edit">编辑</button>
-				</div>
+<body>
+	<div id="func" class="container-fluid">
+		<div class="row">
+			<div class="col-md-2">
+				<input type="text" name="username" placeholder="用户名" class="layui-input" v-model="username" />
+				<button class="layui-btn layui-btn-normal" @click="query">查询</button>
+				<button class="layui-btn layui-btn-normal" @click="edit">编辑</button>
 			</div>
 		</div>
-		<div id="jqGrid_wrapper">
-			<table id="jqGrid"></table>
-			<div id="jqGridPager"></div>
-		</div>
+	</div>
+	<div id="jqGrid_wrapper">
+		<table id="jqGrid"></table>
+		<div id="jqGridPager"></div>
+	</div>
 
-		#parse("globalJs.html")
-		<script>
-			layui.use(['form'], function() {
-				var form = layui.form,
-					layer = layui.Layer;
-				window.form = layui.form;
+	#parse("globalJs.html")
+	<script>
+		layui.use(['form'], function () {
+			var form = layui.form,
+				layer = layui.Layer;
+			window.form = layui.form;
+		});
+
+		$(function () {
+			$("#jqGrid").jqGrid({
+				url: '/user/manage/list.do',
+				colModel: [{
+					label: '用户ID',
+					name: 'id',
+					hidden: true,
+					key: true
+				}, {
+					label: '角色ID',
+					name: 'roleid',
+					hidden: true,
+				}, {
+					label: '用户名',
+					name: 'email',
+					width: 75
+				}, {
+					label: '昵称',
+					name: 'nickname',
+					width: 75
+				}, {
+					label: '角色',
+					name: 'rolename',
+					width: 75
+				}, {
+					label: '权限',
+					name: 'permissionname',
+					width: 75
+				}, {
+					label: '状态',
+					name: 'status',
+					width: 75,
+					formatter: function (value, options, row) {
+						return value === 1 ? '<span>正常</span>' : '<span>禁用</span>';
+					}
+				}, {
+					label: '创建时间',
+					name: 'createTime',
+					width: 75
+				}, {
+					label: '最近登录',
+					name: 'lastLoginTime',
+					width: 75
+				}]
 			});
 
-			$(function() {
-				$("#jqGrid").jqGrid({
-					url: '/user/manage/list.do',
-					colModel: [{
-						label: '用户ID',
-						name: 'id',
-						hidden: true,
-						key: true
-					}, {
-						label: '角色ID',
-						name: 'roleid',
-						hidden: true,
-					}, {
-						label: '用户名',
-						name: 'email',
-						width: 75
-					}, {
-						label: '昵称',
-						name: 'nickname',
-						width: 75
-					}, {
-						label: '角色',
-						name: 'rolename',
-						width: 75
-					}, {
-						label: '权限',
-						name: 'permissionname',
-						width: 75
-					}, {
-						label: '状态',
-						name: 'status',
-						width: 75,
-						formatter: function(value, options, row) {
-							return value === 1 ? '<span>正常</span>' : '<span>禁用</span>';
-						}
-					}, {
-						label: '创建时间',
-						name: 'createTime',
-						width: 75
-					}, {
-						label: '最近登录',
-						name: 'lastLoginTime',
-						width: 75
-					}]
-				});
+		});
 
-			});
-
-			var vm = new Vue({
-				el: '#func',
-				data: {
-					username: '',
-					info: {
-						email: '',
-						rolename: '',
-						roleid: '',
-						status: ''
-					}
-				},
-				methods: {
-					query: function() {
-						vm.reload();
-					},
-					edit: function() {
-						var row = getSelectedRowData();
-						if(row != undefined) {
-							vm.info = row;
-							vm.openlayer();
-						}
-					},
-					openlayer: function() {
-						var index = layer.open({
-							title: '编辑',
-							type: 2,
-							content: '/user/useredit.page',
-							area: ['30%', '50%']
-						})
-					},
-					reload: function() {
-						var page = $("#jqGrid").jqGrid('getGridParam', 'page');
-						$('#jqGrid').jqGrid('setGridParam', {
-							postData: {
-								'email': vm.username
-							},
-							page: page
-						}).trigger("reloadGrid");
-					}
-				},
-				updated: function() {
-					try {
-						window.form.render();
-					} catch(error) {
-						//
-					}
+		var vm = new Vue({
+			el: '#func',
+			data: {
+				username: '',
+				info: {
+					email: '',
+					rolename: '',
+					roleid: '',
+					status: ''
 				}
-			});
-		</script>
-	</body>
+			},
+			methods: {
+				query: function () {
+					vm.reload();
+				},
+				edit: function () {
+					var row = getSelectedRowData();
+					if (row != undefined) {
+						vm.info = row;
+						vm.openlayer();
+					}
+				},
+				openlayer: function () {
+					var index = layer.open({
+						title: '编辑',
+						type: 2,
+						content: '/user/useredit.page',
+						area: ['30%', '50%'],
+						end: function () {
+							vm.reload();
+						}
+					})
+				},
+				reload: function () {
+					var page = $("#jqGrid").jqGrid('getGridParam', 'page');
+					$('#jqGrid').jqGrid('setGridParam', {
+						postData: {
+							'email': vm.username
+						},
+						page: page
+					}).trigger("reloadGrid");
+				}
+			},
+			updated: function () {
+				try {
+					window.form.render();
+				} catch (error) {
+
+				}
+			}
+		});
+	</script>
+</body>
 
 </html>

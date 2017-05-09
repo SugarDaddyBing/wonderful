@@ -1,4 +1,4 @@
-package com.cruelbb.business.user.bo;
+package com.cruelbb.business.user.vo;
 
 import java.io.Serializable;
 import java.util.Date;
