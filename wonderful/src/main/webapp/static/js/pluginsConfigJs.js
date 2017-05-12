@@ -65,3 +65,15 @@ function getSelectedRowData() {
 	}
 	return grid.getRowData(rowKey);
 }
+
+// 选择多条记录
+function getSelectedRows() {
+	var grid = $("#jqGrid");
+	var rowKey = grid.getGridParam("selrow");
+	if (!rowKey) {
+		alert("请选择一条记录");
+		return;
+	}
+
+	return grid.getGridParam("selarrrow");
+}

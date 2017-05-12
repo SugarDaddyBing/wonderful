@@ -34,8 +34,9 @@ public class UserRealm extends AuthorizingRealm {
    */
   @Override
   protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    String username = TokenManager.getToken().getEmail();
-
+    //String username = TokenManager.getToken().getEmail();
+    User user = (User)principals.getPrimaryPrincipal();
+    String username = user.getEmail();
     SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
     Set<String> rolename = userService.findRolesByUsername(username);
     info.setRoles(rolename);

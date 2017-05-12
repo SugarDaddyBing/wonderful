@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +12,11 @@ import com.cruelbb.business.common.web.PageIn;
 import com.cruelbb.business.common.web.PageOut;
 import com.cruelbb.business.common.web.R;
 import com.cruelbb.business.user.po.Role;
+import com.cruelbb.business.user.po.User;
 import com.cruelbb.business.user.service.UserService;
 import com.cruelbb.business.user.vo.UserRolePerm;
 import com.cruelbb.business.user.vo.UserVo;
+import com.cruelbb.core.shiro.token.manager.TokenManager;
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -59,6 +60,12 @@ public class UserManageController {
     return R.ok().put("rolelist", rlist);
   }
 
+  /**
+   * 用于用户管理的更新功能
+   *
+   * @param user
+   * @return
+   */
   @RequestMapping("/userUpdate")
   public R userUpdate(UserVo user) {
 
@@ -67,5 +74,16 @@ public class UserManageController {
     } else {
       return R.error();
     }
+  }
+
+  /**
+   * 当前登录用户信息
+   *
+   * @return
+   */
+  @RequestMapping("/getUser")
+  public R getUser() {
+    User user = TokenManager.getToken();
+    return R.ok().put("user", user);
   }
 }

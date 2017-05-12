@@ -18,6 +18,7 @@
   <!-- 安全管理器 -->
   <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
     <property name="realm" ref="userRealm" />
+    <property name="sessionManager" ref="sessionManager"></property>
   </bean>
 
   <!-- 静态注入，相当于调用SecurityUtils.setSecurityManager(securityManager) -->
@@ -29,6 +30,7 @@
   <!-- 授权+认证Realm -->
   <bean id="userRealm" class="com.cruelbb.core.shiro.token.UserRealm"></bean>
 
+  <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager"></bean>
   <!-- Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行 -->
   <!-- Web应用中,Shiro可控制的Web请求必须经过Shiro主过滤器的拦截,Shiro对基于Spring的Web应用提供了完美的支持 -->
   <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">

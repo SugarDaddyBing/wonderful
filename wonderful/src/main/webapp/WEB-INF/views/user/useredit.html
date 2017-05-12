@@ -50,7 +50,6 @@
 			methods: {
 				getRolelist: function () {
 					$.get("/user/manage/roleSelect.do", function (r) {
-						debugger;
 						vm.rolelist = r.rolelist;
 					}, "json");
 				},

@@ -14,9 +14,14 @@ public class Main {
   private static ApplicationContext factory = new ClassPathXmlApplicationContext("classpath:test/springmybatis/ApplicationContext.xml");
 
   public static void main(String[] args) {
-  SqlSessionTemplate sqlSessionTemplate = (SqlSessionTemplate) factory.getBean("sqlSessionTemplate");
-    List<Role> list = sqlSessionTemplate.getMapper(Mapper.class).getRole();
+    SqlSessionTemplate sqlSessionTemplate_f = (SqlSessionTemplate) factory.getBean("sqlSessionTemplate_f");
+    SqlSessionTemplate sqlSessionTemplate_t = (SqlSessionTemplate) factory.getBean("sqlSessionTemplate_t");
+    List<Role> list = sqlSessionTemplate_f.getMapper(Mapper.class).getRole();
     System.out.println(list.get(0).getName());
+    for (int i = 0; i < list.size(); i++) {
+      sqlSessionTemplate_t.getMapper(Mapper.class).setRole(list.get(i));
+      System.out.println("ok++"+(i+1));
+    }
   }
 
 }

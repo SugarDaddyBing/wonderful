@@ -7,4 +7,6 @@ import test.springmybatis.po.Role;
 public interface Mapper {
 
   List<Role> getRole();
+
+  int setRole(Role role);
 }

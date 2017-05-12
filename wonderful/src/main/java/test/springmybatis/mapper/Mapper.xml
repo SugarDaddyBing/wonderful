@@ -5,4 +5,12 @@
   <select id="getRole" resultType="test.springmybatis.po.Role">
     select * from u_role
   </select>
+
+  <!-- <insert id="setRole" resultType="test.springmybatis.po.Role"> select * from u_role </select> -->
+  <insert id="setRole" parameterType="test.springmybatis.po.Role">
+    insert into role values(
+    #{id},
+    #{name},
+    #{type})
+  </insert>
 </mapper>
