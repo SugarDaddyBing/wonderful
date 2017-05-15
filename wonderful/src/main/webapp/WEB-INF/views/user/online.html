@@ -1,10 +1,52 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
-	<body>
-		在线人数1111
-	</body>
+
+<head>
+<meta charset="UTF-8">
+<title>jsonp</title>
+<link rel="stylesheet" href="/static/css/onlinestyle.css" media="screen" type="text/css" />
+<link rel="stylesheet" href="/static/plugins/layui/css/layui.css" media="screen" type="text/css" />
+</head>
+
+<body>
+  <div id="body" class="layui-form">
+    <div id="convo">
+      <ul class="chat-thread">
+
+      </ul>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+      <textarea name="" placeholder="请输入" class="layui-textarea" v-model="msgSend"></textarea>
+      <a class="layui-btn" @click="send">发送</a>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="/static/plugins/jquery.min.js"></script>
+<script type="text/javascript" src="/static/plugins/vue.min.js"></script>
+<script>
+	var vm = new Vue({
+		el : '#body',
+		data : {
+			msgSend : ''
+		},
+		methods : {
+			send : function() {
+				$.ajax({
+					type : 'get',
+					async : false,
+					url : 'http://www.tuling123.com/openapi/api?key=470c4c66417b4d79a8f5a07a9c3340e5&info=' + vm.msgSend + '&userid=123456',
+					dataType : "json",
+					success : function(data) {
+						var msgSend = '<li>' + vm.msgSend + '</li>';
+						var msgFrom = '<li>' + data.text + '</li>';
+						$('#convo ul').append(msgSend);
+						$('#convo ul').append(msgFrom);
+					}
+				});
+			}
+		}
+	});
+</script>
+
 </html>
