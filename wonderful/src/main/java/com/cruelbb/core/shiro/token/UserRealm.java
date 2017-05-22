@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cruelbb.business.user.po.User;
 import com.cruelbb.business.user.service.UserService;
-import com.cruelbb.core.shiro.token.manager.TokenManager;
 
 /**
  * shiro 认证 +授权

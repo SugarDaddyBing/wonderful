@@ -1,4 +1,4 @@
-package com.cruelbb.business.user.dao;
+package com.cruelbb.business.common.dao;
 
 import java.util.List;
 import java.util.Map;

@@ -13,7 +13,7 @@
 		<!-- 当前文件存放文件 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- 历史日志存放文件 -->
-			<fileNamePattern>E://logs/wonderful.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>E://logs/wonderful/wonderful.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>

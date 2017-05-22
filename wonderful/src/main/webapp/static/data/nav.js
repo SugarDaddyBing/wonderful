@@ -1,11 +1,11 @@
 var navs = [ {
 	"title" : "用户管理",
 	"icon" : "fa fa-users",
-	"spread" : true,
+	"spread" : false,
 	"children" : [ {
 		"title" : "在线用户",
 		"icon" : "fa fa-wifi",
-		"href" : "/user/online.page"
+		"href" : "/user/online.page",
 	}, {
 		"title" : "用户权限",
 		"icon" : "&#xe63c;",

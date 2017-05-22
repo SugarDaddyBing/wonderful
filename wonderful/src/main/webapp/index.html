@@ -107,7 +107,7 @@
 
     <script type="text/javascript" src="static/plugins/jquery.min.js"></script>
     <script type="text/javascript" src="static/plugins/layui/layui.js"></script>
-    <script type="text/javascript" src="static/data/nav.js"></script>
+<!--     <script type="text/javascript" src="static/data/nav.js"></script> -->
     <script type="text/javascript" src="static/plugins/vue.min.js"></script>
     <script src="static/js/index.js"></script>
     <script>
@@ -129,19 +129,28 @@
       var vm = new Vue({
         el: '#vuearea',
         data: {
-          user: {}
+          user: {},
+          navs:{}
         },
         methods: {
           getUser: function () {
             $.get('/user/manage/getUser.do', function (data) {
               vm.user = data.user;
             }, "json");
+          },
+          getMeunlist: function(){
+        	  $.get('/menu/list.do', function (data) {
+                  vm.navs = data.menulist;
+                }, "json");
           }
+
         },
         created: function () {
           this.getUser();
+          this.getMeunlist();
         }
       });
+
     </script>
   </div>
 </body>

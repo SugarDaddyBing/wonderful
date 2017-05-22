@@ -27,6 +27,6 @@
 
   <!-- services -->
   <bean class="com.cruelbb.business.user.service.impl.UserServiceImpl"></bean>
-
+  <bean class="com.cruelbb.business.menu.service.impl.MenuServiceImpl"></bean>
 
 </beans>

@@ -42,7 +42,7 @@ layui.config({
         spreadOne: true,
         elem: '#admin-navbar-side',
         cached: true,
-        data: navs
+        data: vm.navs
 		/*cached:true,
 		url: 'datas/nav.json'*/
     });

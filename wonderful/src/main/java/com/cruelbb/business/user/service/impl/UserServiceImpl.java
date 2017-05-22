@@ -8,7 +8,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.cruelbb.business.user.dao.UserMapper;
+import com.cruelbb.business.common.dao.UserMapper;
 import com.cruelbb.business.user.po.Role;
 import com.cruelbb.business.user.po.User;
 import com.cruelbb.business.user.service.UserService;
