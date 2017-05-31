@@ -19,4 +19,9 @@ public class MenuServiceImpl implements MenuService {
     return dynamicSqlSessionTemplate.getMapper(MenuMapper.class).getMenuList();
   }
 
+  @Override
+  public List<Menu> getParentMenuList() {
+    return dynamicSqlSessionTemplate.getMapper(MenuMapper.class).getParentMenuList();
+  }
+
 }

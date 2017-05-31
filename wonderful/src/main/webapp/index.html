@@ -98,7 +98,7 @@
         <div class="admin-header-lock-img">
           <img src="static/images/wqbb.jpg" />
         </div>
-        <div class="admin-header-lock-name" id="lockUserName">{{user.nickname}}</div>
+        <div class="admin-header-lock-name" id="lockUserName"></div>
         <input type="text" class="admin-header-lock-input" value="输入密码解锁.." name="lockPwd" id="lockPwd" />
         <button class="layui-btn layui-btn-small" id="unlock">解锁</button>
       </div>
@@ -134,12 +134,12 @@
         },
         methods: {
           getUser: function () {
-            $.get('/user/manage/getUser.do', function (data) {
+            $.get('user/manage/getUser.do', function (data) {
               vm.user = data.user;
             }, "json");
           },
           getMeunlist: function(){
-        	  $.get('/menu/list.do', function (data) {
+        	  $.get('menu/list.do', function (data) {
                   vm.navs = data.menulist;
                 }, "json");
           }

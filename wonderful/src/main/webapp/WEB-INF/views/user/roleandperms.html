@@ -31,7 +31,7 @@
 
 		$(function () {
 			$("#jqGrid").jqGrid({
-				url: '/user/manage/list.do',
+				url: '../user/manage/list.do',
 				colModel: [{
 					label: '用户ID',
 					name: 'id',
@@ -103,7 +103,7 @@
 					var index = layer.open({
 						title: '编辑',
 						type: 2,
-						content: '/user/useredit.page',
+						content: '../user/useredit.page',
 						area: ['30%', '50%'],
 						end: function () {
 							vm.reload();

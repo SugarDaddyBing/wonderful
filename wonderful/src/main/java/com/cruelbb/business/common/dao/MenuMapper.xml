@@ -10,4 +10,9 @@
   </select>
 
 
+<select id="getParentMenuList" resultType="com.cruelbb.business.menu.po.Menu" >
+    select
+    id,title,icon,href,disabled
+    from menu where parentid = 0 and disabled = 0
+  </select>
 </mapper>

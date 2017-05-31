@@ -17,20 +17,19 @@
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>
-			<Pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{80} %method - %msg%n</Pattern>
+			<Pattern>%d{HH:mm:ss} [%thread] %-5level %logger{80} %method - %msg%n</Pattern>
 			<charset>GBK</charset>
 		</encoder>
 	</appender>
 
 
 	<logger name="com.cruelbb">
-		<level value="ERROR" />
+		<level value="INFO" />
 		<appender-ref ref="FILE" />
 	</logger>
 
 	<root>
 		<level value="DEBUG"></level>
-		<level value="INFO"></level>
-		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

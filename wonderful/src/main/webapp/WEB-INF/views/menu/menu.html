@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8"> #parse("globalCss.html")
+		<link href="${rc.contextPath}/static/plugins/ztree/css/metroStyle/metroStyle.css" rel="stylesheet">
+		<title>菜单管理</title>
+	</head>
+
+	<body>
+		<div id="vmarea" class="container">
+			<div class="row">
+				<form class="layui-form">
+					<div class="layui-form-item">
+						<label class="layui-form-label">功能</label>
+						<div class="layui-input-block">
+							<input type="radio" name="type" value="1" v-model="menu.type" lay-filter="type" title="新增菜单"> <input type="radio" name="type" value="0" v-model="menu.type" lay-filter="type" title="删除菜单">
+						</div>
+					</div>
+
+					<!-- 新增 -->
+					<div v-show="menu.type == 1 || menu.type == 2">
+						<blockquote class="layui-elem-quote">新增菜单</blockquote>
+
+						<div class="col-sm-5 col-sm-offset-1">
+							<div class="layui-form-item">
+								<label class="layui-form-label">类型</label>
+								<div class="layui-input-block">
+									<input type="radio" name="type" value="1" v-model="menu.type" lay-filter="type" title="菜单"> <input type="radio" name="type" value="2" v-model="menu.type" lay-filter="type" title="按钮">
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<label class="layui-form-label">标题 </label>
+								<div class="layui-input-inline">
+									<input type="text" name="title" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<label class="layui-form-label">图标</label>
+								<div class="layui-input-inline">
+									<input type="text" name="icon" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+
+							<div v-show="menu.type ==2" class="layui-form-item">
+								<label class="layui-form-label">父菜单</label>
+								<div class="layui-input-inline">
+									<select name="parentMenu">
+										<option v-for="m in parentMenuList" v-bind:value="m.id">{{m.title}}</option>
+									</select>
+								</div>
+							</div>
+
+							<div v-show="menu.type == 1" class="layui-form-item">
+								<label class="layui-form-label">禁用</label>
+								<div class="layui-input-block">
+									<input type="checkbox" name="disabled" lay-skin="switch" lay-text="已禁用|">
+								</div>
+							</div>
+
+							<div v-show="menu.type == 2" class="layui-form-item">
+								<label class="layui-form-label">路径</label>
+								<div class="layui-input-inline">
+									<input type="text" name="url" autocomplete="off" class="layui-input">
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-sm-5">
+							<div class="layui-form-item">
+								<label class="layui-form-label"></label>
+							</div>
+						</div>
+
+					</div>
+					<!-- 删除 -->
+					<div v-show="menu.type == 0">
+						<blockquote class="layui-elem-quote">删除菜单</blockquote>
+                        <div class="layui-form-item">
+                          <label class="">父菜单</label>
+                        </div>
+					</div>
+				</form>
+			</div>
+		</div>
+		#parse("globalJs.html")
+		<script type="text/javascript">
+			layui.use(['form'], function() {
+				var form = layui.form();
+				window.form = layui.form();
+
+				//监听radio
+				form.on('radio(type)', function(data) {
+					vm.menu.type = data.value;
+				});
+			});
+
+			var vm = new Vue({
+				el: '#vmarea',
+				data: {
+					menu: {
+						type: 1
+					},
+					parentMenuList: []
+				},
+				methods: {
+					getMenuList: function() {
+						$.get('../menu/parentMenuSelect.do', function(r) {
+							vm.parentMenuList = r.parentlist;
+						}, 'json');
+					}
+				},
+				created: function() {
+					this.getMenuList();
+				},
+				updated: function() {
+					try {
+						window.form.render();
+					} catch(error) {
+
+					}
+				}
+
+			});
+		</script>
+	</body>
+
+</html>

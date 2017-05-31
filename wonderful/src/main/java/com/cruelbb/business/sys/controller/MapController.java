@@ -15,14 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MapController {
 
   /**
-   * index页面map
+   * map of user
    *
    * @param url
    * @return view
    */
   @RequiresRoles(value = {"管理员", "V3"}, logical = Logical.OR)
   @RequestMapping("/user/{url}")
-  public String indexMap(@PathVariable("url") String url) {
+  public String userMap(@PathVariable("url") String url) {
     return "user/" + url + ".html";
+  }
+
+  /**
+   * map of menu
+   *
+   * @param url
+   * @return
+   */
+  @RequiresRoles(value = {"管理员", "V3"}, logical = Logical.OR)
+  @RequestMapping("/menu/{url}")
+  public String menuMap(@PathVariable("url") String url) {
+    return "menu/" + url + ".html";
   }
 }

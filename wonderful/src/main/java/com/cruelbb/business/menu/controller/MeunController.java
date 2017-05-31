@@ -57,4 +57,10 @@ public class MeunController {
 
     return R.ok().put("menulist", menuvolist);
   }
+
+  @RequestMapping("parentMenuSelect")
+  public R parentMenuSelect() {
+    List<Menu> parentMenuList = menuService.getParentMenuList();
+    return R.ok().put("parentlist", parentMenuList);
+  }
 }

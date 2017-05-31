@@ -10,6 +10,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import com.cruelbb.business.common.annotation.MyA;
+import com.cruelbb.business.common.utils.Logutil;
 
 @Aspect
 @Component
@@ -28,5 +29,6 @@ public class MyAspect {
     MyA mya = method.getAnnotation(MyA.class);
 
     System.out.println(mya.value());
+    Logutil.info(mya.value());
   }
 }

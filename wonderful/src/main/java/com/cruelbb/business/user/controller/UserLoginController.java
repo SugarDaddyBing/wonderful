@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,9 @@ public class UserLoginController {
     } catch (UnknownAccountException e) {
       resultMap.put("status", 500);
       resultMap.put("message", "账号或密码错误");
+    } catch (LockedAccountException e) {
+      resultMap.put("status", 403);
+      resultMap.put("message", "账号被限制登录");
     } catch (Exception e) {
 
     }

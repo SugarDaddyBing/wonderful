@@ -2,90 +2,106 @@
 <html>
 
 <head>
-	<meta charset="UTF-8"> #parse("globalCss.html")
+<meta charset="UTF-8">
+#parse("globalCss.html")
 </head>
 
 <body>
-	<form class="layui-form">
-		<div id="vuearea">
-			<div class="layui-form-item">
-				<label>{{info.email}}</label>
-			</div>
+  <form class="layui-form">
+    <div id="vuearea">
+      <div class="layui-form-item">
+        <label class="layui-form-label">{{info.email}}</label>
+      </div>
 
-			<div class="layui-form-item">
-				<select name="rolename" v-model="info.roleid" lay-filter="rolename">
-          <option v-for="role in rolelist" :value="role.roleid">{{role.rolename}}</option>
-        </select>
-				<a class="layui-btn layui-btn-normal" @click="saveOrUpdate">更新</a>
-			</div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <select name="rolename" v-model="info.roleid" lay-filter="rolename">
+            <option v-for="role in rolelist" :value="role.roleid">{{role.rolename}}</option>
+          </select>
+        </div>
+      </div>
 
-			<div class="layui-form-item">
-				<label></label>
-			</div>
-		</div>
-	</form>
-	#parse("globalJs.html")
-	<script>
-		layui.use(['form'], function () {
-			var form = layui.form();
-			window.form = layui.form();
+      <div class="layui-form-item">
+        <label class="layui-form-label">状态：</label>
+        <div class="layui-input-block">
+          <input type="checkbox" name="status" lay-skin="switch" lay-text="正常|拉黑" v-model="info.status"
+            lay-filter="status" />
+        </div>
+      </div>
 
-			form.on('select(rolename)', function (data) {
-				vm.info.roleid = data.value;
-				vm.info.rolename = data.elem[data.elem.selectedIndex].innerText;
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <a class="layui-btn layui-btn-normal" @click="saveOrUpdate">更新</a>
+        </div>
+      </div>
+    </div>
+  </form>
+  #parse("globalJs.html")
+  <script>
+			layui.use([ 'form' ], function() {
+				var form = layui.form();
+				window.form = layui.form();
+
+				form.on('select(rolename)', function(data) {
+					vm.info.roleid = data.value;
+					vm.info.rolename = data.elem[data.elem.selectedIndex].innerText;
+				});
+
+				form.on('switch(status)', function(data) {
+					data.elem.checked == true ? vm.info.status = 1 : vm.info.status = 0;
+				})
 			});
-		});
 
-		var vm = new Vue({
-			el: '#vuearea',
-			data: {
-				info: {
-					email: '',
-					rolename: '',
-					roleid: '',
-					status: ''
+			var vm = new Vue({
+				el : '#vuearea',
+				data : {
+					info : {
+						email : '',
+						rolename : '',
+						roleid : '',
+						status : ''
+					},
+					rolelist : {}
 				},
-				rolelist: {}
-			},
-			methods: {
-				getRolelist: function () {
-					$.get("/user/manage/roleSelect.do", function (r) {
-						vm.rolelist = r.rolelist;
-					}, "json");
-				},
-				saveOrUpdate: function () {
-					$.ajax({
-						type: "post",
-						url: "/user/manage/userUpdate.do",
-						data: vm.info, //JSON.stringify(vm.info),
-						dataType: "json",
-						success: function (data) {
-							if (data.code === 0) {
-								alert("操作成功！");
-							} else {
-								alert("操作失败！")
+				methods : {
+					getRolelist : function() {
+						$.get("../user/manage/roleSelect.do", function(r) {
+							vm.rolelist = r.rolelist;
+						}, "json");
+					},
+					saveOrUpdate : function() {
+						$.ajax({
+							type : "post",
+							url : "../user/manage/userUpdate.do",
+							data : vm.info, //JSON.stringify(vm.info),
+							dataType : "json",
+							success : function(data) {
+								if (data.code === 0) {
+									alert("操作成功！");
+								} else {
+									alert("操作失败！")
+								}
 							}
-						}
-					});
-				}
-			},
-			created: function () {
-				this.info.email = parent.vm.info.email;
-				this.info.rolename = parent.vm.info.rolename;
-				this.info.roleid = parent.vm.info.roleid;
-				this.info.status = 1;
-				this.getRolelist();
-			},
-			updated: function () {
-				try {
-					window.form.render();
-				} catch (error) {
+						});
+					}
+				},
+				created : function() {
+					this.info.email = parent.vm.info.email;
+					this.info.rolename = parent.vm.info.rolename;
+					this.info.roleid = parent.vm.info.roleid;
+					this.info.status = 1;
+					this.getRolelist();
+				},
+				updated : function() {
+					try {
+						window.form.render();
+					} catch (error) {
 
+					}
 				}
-			}
 
-		});
-	</script>
+			});
+		</script>
 </body>
 
 </html>

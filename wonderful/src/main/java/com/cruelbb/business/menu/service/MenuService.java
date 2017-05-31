@@ -8,4 +8,5 @@ import com.cruelbb.business.menu.po.Menu;
 public interface MenuService {
 
   List<Menu> getMenuList();
+  List<Menu> getParentMenuList();
 }
