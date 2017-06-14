@@ -9,4 +9,8 @@ public interface MenuMapper {
   List<Menu> getMenuList();
 
   List<Menu> getParentMenuList();
+
+  List<Menu> getChildByParentId(int id);
+
+  int delMenuById(int id);
 }

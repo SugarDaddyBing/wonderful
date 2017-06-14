@@ -4,9 +4,13 @@ import java.util.List;
 
 import com.cruelbb.business.menu.po.Menu;
 
-
 public interface MenuService {
 
   List<Menu> getMenuList();
+
   List<Menu> getParentMenuList();
+
+  List<Menu> getChildByParentId(int id);
+
+  boolean delMenuById(int id);
 }

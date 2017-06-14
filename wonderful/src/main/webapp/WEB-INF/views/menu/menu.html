@@ -47,7 +47,7 @@
 							<div v-show="menu.type ==2" class="layui-form-item">
 								<label class="layui-form-label">父菜单</label>
 								<div class="layui-input-inline">
-									<select name="parentMenu">
+									<select name="parentMenu1">
 										<option v-for="m in parentMenuList" v-bind:value="m.id">{{m.title}}</option>
 									</select>
 								</div>
@@ -69,32 +69,48 @@
 
 						</div>
 
-						<div class="col-sm-5">
-							<div class="layui-form-item">
-								<label class="layui-form-label"></label>
-							</div>
-						</div>
-
 					</div>
 					<!-- 删除 -->
 					<div v-show="menu.type == 0">
 						<blockquote class="layui-elem-quote">删除菜单</blockquote>
-                        <div class="layui-form-item">
-                          <label class="">父菜单</label>
-                        </div>
+						<div class="col-sm-5 col-sm-offset-1">
+							<div class="layui-form-item">
+								<label class="layui-form-label">父菜单</label>
+								<div class="layui-input-inline">
+									<select name="parentMenu2" lay-filter="parentchange">
+										<option v-for="m in parentMenuList" v-bind:value="m.id">{{m.title}}</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<label class="layui-form-label">子项</label>
+								<div class="layui-input-inline">
+									<ul>
+										<li v-for="cm in childMenuList">
+											<a href="javascript:void(0)" onclick="vm.delMenu(this.name)" :name="cm.id">{{cm.title}}</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
 		</div>
 		#parse("globalJs.html")
 		<script type="text/javascript">
-			layui.use(['form'], function() {
+			layui.use(['form', 'layer'], function() {
 				var form = layui.form();
 				window.form = layui.form();
+				var layer = layui.layer;
 
-				//监听radio
+				//监听
 				form.on('radio(type)', function(data) {
 					vm.menu.type = data.value;
+				});
+
+				form.on('select(parentchange)', function(data) {
+					vm.getChildMenuList(data.value);
 				});
 			});
 
@@ -104,14 +120,40 @@
 					menu: {
 						type: 1
 					},
-					parentMenuList: []
+					parentMenuList: [],
+					childMenuList: []
 				},
 				methods: {
 					getMenuList: function() {
 						$.get('../menu/parentMenuSelect.do', function(r) {
 							vm.parentMenuList = r.parentlist;
 						}, 'json');
+					},
+					getChildMenuList: function(parentid) {
+						$.get('getChildList.do', {
+							parentId: parentid
+						}, function(r) {
+							vm.childMenuList = r.childList;
+						}, 'json');
+					},
+					delMenu: function(menuid) {
+						layer.confirm('想清楚要删掉它么？', {
+								btn: '是的'
+							},
+							function(index, layero) {
+								$.get('delMenu.do', {
+									menuId: menuid
+								}, function(r) {
+									if(r.code == 0) {
+										layer.closeAll('dialog');
+									} else {
+										
+									}
+								}, 'json')
+							}
+						);
 					}
+
 				},
 				created: function() {
 					this.getMenuList();

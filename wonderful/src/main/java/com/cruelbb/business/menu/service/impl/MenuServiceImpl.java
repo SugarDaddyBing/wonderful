@@ -24,4 +24,16 @@ public class MenuServiceImpl implements MenuService {
     return dynamicSqlSessionTemplate.getMapper(MenuMapper.class).getParentMenuList();
   }
 
+  @Override
+  public List<Menu> getChildByParentId(int id) {
+
+    return dynamicSqlSessionTemplate.getMapper(MenuMapper.class).getChildByParentId(id);
+  }
+
+  @Override
+  public boolean delMenuById(int id) {
+
+    return dynamicSqlSessionTemplate.getMapper(MenuMapper.class).delMenuById(id) > 0;
+  }
+
 }

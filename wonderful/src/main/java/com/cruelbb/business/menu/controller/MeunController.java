@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cruelbb.business.common.web.R;
@@ -62,5 +63,21 @@ public class MeunController {
   public R parentMenuSelect() {
     List<Menu> parentMenuList = menuService.getParentMenuList();
     return R.ok().put("parentlist", parentMenuList);
+  }
+
+  @RequestMapping("getChildList")
+  public R getChildList(@RequestParam("parentId") int id) {
+    List<Menu> childMenuList = menuService.getChildByParentId(id);
+    return R.ok().put("childList", childMenuList);
+  }
+
+  @RequestMapping("delMenu")
+  public R delMenu(@RequestParam("menuId") int id) {
+    boolean result = menuService.delMenuById(id);
+    if (result) {
+      return R.ok();
+    } else {
+      return R.error();
+    }
   }
 }
