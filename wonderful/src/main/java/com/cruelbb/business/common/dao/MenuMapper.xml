@@ -7,9 +7,16 @@
     select
     id,title,parentid,icon,href,disabled
     from menu
+    where disabled = 0
   </select>
 
+  <select id="getMenuListByUserName" parameterType="string" resultType="com.cruelbb.business.menu.po.Menu">
+  select
+  id,title,parentid,icon,href,disabled
+  form menu
+  </select>
 
+  <!-- 父节点下拉框 -->
   <select id="getParentMenuList" resultType="com.cruelbb.business.menu.po.Menu">
     select
     id,title,icon,href,disabled
@@ -17,12 +24,28 @@
     disabled = 0
   </select>
 
+  <!-- 通过parentid查找子节点 -->
   <select id="getChildByParentId" parameterType="int" resultType="com.cruelbb.business.menu.po.Menu">
     select
     id,title,icon,href,disabled
     from menu
     <where>
-      parentid = #{id}
+      parentid = #{id} and disabled = 0
     </where>
   </select>
+
+  <!-- 软删除 菜单按钮 -->
+  <update id="delMenuById" parameterType="int">
+    update menu
+    <set>
+      disabled = 1
+    </set>
+    where id = #{id}
+  </update>
+  <!-- 新增菜单 -->
+  <insert id="addMenu" parameterType="com.cruelbb.business.menu.po.Menu">
+    insert into menu(title,parentid,icon,href,disabled)
+    values
+    (#{title},#{parentid},#{icon},#{href},#{disabled})
+  </insert>
 </mapper>

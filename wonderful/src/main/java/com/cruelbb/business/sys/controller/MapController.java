@@ -37,4 +37,16 @@ public class MapController {
   public String menuMap(@PathVariable("url") String url) {
     return "menu/" + url + ".html";
   }
+
+  /**
+   * map of chat
+   *
+   * @param url
+   * @return
+   */
+  @RequiresRoles(value = {"管理员", "V3"}, logical = Logical.OR)
+  @RequestMapping("/chat/{url}")
+  public String chatMap(@PathVariable("url") String url) {
+    return "chat/" + url + ".html";
+  }
 }

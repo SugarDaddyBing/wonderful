@@ -1,173 +1,213 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8"> #parse("globalCss.html")
-		<link href="${rc.contextPath}/static/plugins/ztree/css/metroStyle/metroStyle.css" rel="stylesheet">
-		<title>菜单管理</title>
-	</head>
+<head>
+<meta charset="UTF-8">
+#parse("globalCss.html")
+<link rel="stylesheet" href="/static/plugins/css/font-awesome.css">
+<title>菜单管理</title>
+</head>
 
-	<body>
-		<div id="vmarea" class="container">
-			<div class="row">
-				<form class="layui-form">
-					<div class="layui-form-item">
-						<label class="layui-form-label">功能</label>
-						<div class="layui-input-block">
-							<input type="radio" name="type" value="1" v-model="menu.type" lay-filter="type" title="新增菜单"> <input type="radio" name="type" value="0" v-model="menu.type" lay-filter="type" title="删除菜单">
-						</div>
-					</div>
+<body>
+  <div id="vmarea" class="container">
+    <div class="row">
+      <form class="layui-form">
+        <div class="layui-form-item">
+          <label class="layui-form-label">功能</label>
+          <div class="layui-input-block">
+            <input type="radio" name="type" value="1" v-model="type" lay-filter="type" title="新增菜单"> <input
+              type="radio" name="type" value="0" v-model="type" lay-filter="type" title="删除菜单">
+          </div>
+        </div>
 
-					<!-- 新增 -->
-					<div v-show="menu.type == 1 || menu.type == 2">
-						<blockquote class="layui-elem-quote">新增菜单</blockquote>
+        <!-- 新增 -->
+        <div v-show="type == 1 || type == 2">
+          <blockquote class="layui-elem-quote">新增菜单</blockquote>
 
-						<div class="col-sm-5 col-sm-offset-1">
-							<div class="layui-form-item">
-								<label class="layui-form-label">类型</label>
-								<div class="layui-input-block">
-									<input type="radio" name="type" value="1" v-model="menu.type" lay-filter="type" title="菜单"> <input type="radio" name="type" value="2" v-model="menu.type" lay-filter="type" title="按钮">
-								</div>
-							</div>
+          <div class="col-sm-5 col-sm-offset-1">
+            <div class="layui-form-item">
+              <label class="layui-form-label">类型</label>
+              <div class="layui-input-block">
+                <input type="radio" name="type" value="1" v-model="type" lay-filter="type" title="菜单"> <input
+                  type="radio" name="type" value="2" v-model="type" lay-filter="type" title="按钮">
+              </div>
+            </div>
 
-							<div class="layui-form-item">
-								<label class="layui-form-label">标题 </label>
-								<div class="layui-input-inline">
-									<input type="text" name="title" autocomplete="off" class="layui-input">
-								</div>
-							</div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">标题 </label>
+              <div class="layui-input-inline">
+                <input type="text" name="title" autocomplete="off" class="layui-input" v-model="menu.title">
+              </div>
+            </div>
 
-							<div class="layui-form-item">
-								<label class="layui-form-label">图标</label>
-								<div class="layui-input-inline">
-									<input type="text" name="icon" autocomplete="off" class="layui-input">
-								</div>
-							</div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">图标</label>
+              <div class="layui-input-inline">
+                <input type="text" name="icon" autocomplete="off" class="layui-input" v-model="menu.icon">
+              </div>
+            </div>
 
-							<div v-show="menu.type ==2" class="layui-form-item">
-								<label class="layui-form-label">父菜单</label>
-								<div class="layui-input-inline">
-									<select name="parentMenu1">
-										<option v-for="m in parentMenuList" v-bind:value="m.id">{{m.title}}</option>
-									</select>
-								</div>
-							</div>
+            <div v-show="type ==2" class="layui-form-item">
+              <label class="layui-form-label">父菜单</label>
+              <div class="layui-input-inline">
+                <select name="parentMenu1" lay-filter="parentchangeadd">
+                  <option value="0">请选择···</option>
+                  <option v-for="m in parentMenuList" v-bind:value="m.id">{{m.title}}</option>
+                </select>
+              </div>
+            </div>
 
-							<div v-show="menu.type == 1" class="layui-form-item">
-								<label class="layui-form-label">禁用</label>
-								<div class="layui-input-block">
-									<input type="checkbox" name="disabled" lay-skin="switch" lay-text="已禁用|">
-								</div>
-							</div>
+            <div v-show="type == 1" class="layui-form-item">
+              <label class="layui-form-label">禁用</label>
+              <div class="layui-input-block">
+                <input type="checkbox" name="disabled" lay-skin="switch" lay-text="已禁用|" lay-filter="isdisabled"
+                  v-model="menu.disabled">
+              </div>
+            </div>
 
-							<div v-show="menu.type == 2" class="layui-form-item">
-								<label class="layui-form-label">路径</label>
-								<div class="layui-input-inline">
-									<input type="text" name="url" autocomplete="off" class="layui-input">
-								</div>
-							</div>
+            <div v-show="type == 2" class="layui-form-item">
+              <label class="layui-form-label">路径</label>
+              <div class="layui-input-inline">
+                <input type="text" name="url" autocomplete="off" class="layui-input" v-model="menu.href">
+              </div>
+            </div>
 
-						</div>
+            <div class="layui-form-item">
+              <div class="layui-form-mid">
+                <a class="layui-btn" onclick="vm.addMenu()">确认</a>
+              </div>
+            </div>
+          </div>
 
-					</div>
-					<!-- 删除 -->
-					<div v-show="menu.type == 0">
-						<blockquote class="layui-elem-quote">删除菜单</blockquote>
-						<div class="col-sm-5 col-sm-offset-1">
-							<div class="layui-form-item">
-								<label class="layui-form-label">父菜单</label>
-								<div class="layui-input-inline">
-									<select name="parentMenu2" lay-filter="parentchange">
-										<option v-for="m in parentMenuList" v-bind:value="m.id">{{m.title}}</option>
-									</select>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">子项</label>
-								<div class="layui-input-inline">
-									<ul>
-										<li v-for="cm in childMenuList">
-											<a href="javascript:void(0)" onclick="vm.delMenu(this.name)" :name="cm.id">{{cm.title}}</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
-		#parse("globalJs.html")
-		<script type="text/javascript">
-			layui.use(['form', 'layer'], function() {
+        </div>
+        <!-- 删除 -->
+        <div v-show="type == 0">
+          <blockquote class="layui-elem-quote">删除菜单</blockquote>
+          <div class="col-sm-5 col-sm-offset-1">
+            <div class="layui-form-item">
+              <label class="layui-form-label">父菜单</label>
+              <div class="layui-input-inline">
+                <select name="parentMenu2" lay-filter="parentchangedel">
+                  <option value="">请选择···</option>
+                  <option value="0">一级菜单</option>
+                  <option v-for="m in parentMenuList" v-bind:value="m.id">{{m.title}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <label class="layui-form-label">子项</label>
+              <div class="layui-input-inline">
+                <ol>
+                  <li v-for="cm in childMenuList"><i class="fa fa-trash-o" aria-hidden="true"></i> <a
+                    href="javascript:void(0)" onclick="vm.delMenu(this.name)" :name="cm.id">{{cm.title}}</a></li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  #parse("globalJs.html")
+  <script type="text/javascript">
+			layui.use([ 'form', 'layer' ], function() {
 				var form = layui.form();
 				window.form = layui.form();
 				var layer = layui.layer;
 
 				//监听
 				form.on('radio(type)', function(data) {
-					vm.menu.type = data.value;
+					vm.type = data.value;
 				});
-
-				form.on('select(parentchange)', function(data) {
+				//监听新增 父节点下拉框
+				form.on('select(parentchangeadd)', function(data) {
+					vm.menu.parentid = data.value;
+				});
+				//监听删除父节点下拉框
+				form.on('select(parentchangedel)', function(data) {
 					vm.getChildMenuList(data.value);
+				});
+				//监听是否禁用开关
+				form.on('switch(isdisabled)', function(data) {
+					data.elem.checked == true ? vm.menu.disabled = 1 : vm.menu.disabled = 0;
 				});
 			});
 
 			var vm = new Vue({
-				el: '#vmarea',
-				data: {
-					menu: {
-						type: 1
+				el : '#vmarea',
+				data : {
+					type : 1,
+					menu : {
+						title : '',
+						icon : '',
+						parentid : 0,
+						href : '',
+						disabled : 0
 					},
-					parentMenuList: [],
-					childMenuList: []
+					parentMenuList : [],
+					childMenuList : []
 				},
-				methods: {
-					getMenuList: function() {
+				methods : {
+					getMenuList : function() {
 						$.get('../menu/parentMenuSelect.do', function(r) {
 							vm.parentMenuList = r.parentlist;
 						}, 'json');
 					},
-					getChildMenuList: function(parentid) {
+					getChildMenuList : function(parentid) {
 						$.get('getChildList.do', {
-							parentId: parentid
+							parentId : parentid
 						}, function(r) {
 							vm.childMenuList = r.childList;
 						}, 'json');
 					},
-					delMenu: function(menuid) {
+					delMenu : function(menuid) {
 						layer.confirm('想清楚要删掉它么？', {
-								btn: '是的'
-							},
-							function(index, layero) {
-								$.get('delMenu.do', {
-									menuId: menuid
-								}, function(r) {
-									if(r.code == 0) {
-										layer.closeAll('dialog');
-									} else {
-										
-									}
-								}, 'json')
+							btn : '是的'
+						}, function(index, layero) {
+							$.get('delMenu.do', {
+								menuId : menuid
+							}, function(r) {
+								if (r.code == 0) {
+									layer.closeAll('dialog');
+									//parent.location.reload();
+								} else {
+
+								}
+							}, 'json')
+						});
+					},
+					addMenu : function() {
+						$.ajax({
+							type : "post",
+							url : "addMenu.do",
+							async : true,
+							data : JSON.stringify(vm.menu),
+							//dataType: "json",
+							//contentType:"application/json",
+							success : function(r) {
+								if (r.code == 0) {
+									layer.alert("新增成功")
+								} else {
+									layer.alert("新增失败");
+								}
 							}
-						);
+						});
 					}
 
 				},
-				created: function() {
+				created : function() {
 					this.getMenuList();
 				},
-				updated: function() {
+				updated : function() {
 					try {
 						window.form.render();
-					} catch(error) {
+					} catch (error) {
 
 					}
 				}
 
 			});
 		</script>
-	</body>
+</body>
 
 </html>

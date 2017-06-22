@@ -13,4 +13,6 @@ public interface MenuMapper {
   List<Menu> getChildByParentId(int id);
 
   int delMenuById(int id);
+
+  int addMenu(Menu menu);
 }

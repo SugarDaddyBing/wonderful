@@ -36,4 +36,10 @@ public class MenuServiceImpl implements MenuService {
     return dynamicSqlSessionTemplate.getMapper(MenuMapper.class).delMenuById(id) > 0;
   }
 
+  @Override
+  public boolean addMenu(Menu menu) {
+
+    return dynamicSqlSessionTemplate.getMapper(MenuMapper.class).addMenu(menu) > 0;
+  }
+
 }

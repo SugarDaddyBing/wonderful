@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +29,7 @@ public class MeunController {
   @Autowired
   private MenuService menuService;
 
+  // 加载主页导航栏
   @RequestMapping("list")
   public R list() {
     List<Menu> menulist = menuService.getMenuList();
@@ -71,9 +75,21 @@ public class MeunController {
     return R.ok().put("childList", childMenuList);
   }
 
+  // 软删除菜单
   @RequestMapping("delMenu")
+  //@RequiresPermissions(value={"user:del"})
   public R delMenu(@RequestParam("menuId") int id) {
     boolean result = menuService.delMenuById(id);
+    if (result) {
+      return R.ok();
+    } else {
+      return R.error();
+    }
+  }
+
+  @RequestMapping(value = "addMenu", method = RequestMethod.POST)
+  public R addMenu(@RequestBody Menu menu) {
+    boolean result = menuService.addMenu(menu);
     if (result) {
       return R.ok();
     } else {

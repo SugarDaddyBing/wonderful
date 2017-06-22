@@ -43,12 +43,12 @@ $.extend($.jgrid.defaults, {
 $(window).bind("resize", function() {
 	var width = $("#jqGrid_wrapper").width();
 	$("#jqGrid").setGridWidth(width);
-})
+});
 
 // 重写alert
 window.alert = function(msg) {
 	parent.layer.alert(msg);
-}
+};
 
 // 选择一条记录
 function getSelectedRowData() {
@@ -64,7 +64,7 @@ function getSelectedRowData() {
 		return;
 	}
 	return grid.getRowData(rowKey);
-}
+};
 
 // 选择多条记录
 function getSelectedRows() {
@@ -76,4 +76,12 @@ function getSelectedRows() {
 	}
 
 	return grid.getGridParam("selarrrow");
-}
+};
+
+//ajax全局配置
+$.ajaxSetup({
+	dataType: "json",
+    contentType: "application/json",
+    cache: false,
+    timeout: 60 * 60 * 1000
+});

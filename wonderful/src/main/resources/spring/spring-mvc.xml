@@ -33,6 +33,7 @@
     </property>
   </bean>
 
+
   <bean id="fastJsonConfig" class="com.alibaba.fastjson.support.config.FastJsonConfig">
     <property name="serializerFeatures">
       <list>
