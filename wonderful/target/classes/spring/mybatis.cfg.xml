@@ -15,6 +15,7 @@
     <setting name="callSettersOnNulls" value="true" />
   </settings>
 
+
   <!-- 别名在mybatis中 使用比较方便 -->
   <typeAliases>
     <typeAlias type="com.cruelbb.business.user.po.User" alias="user" />
@@ -26,6 +27,5 @@
       <property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.MySQLDialect" />
     </plugin>
   </plugins>
-
 
 </configuration>

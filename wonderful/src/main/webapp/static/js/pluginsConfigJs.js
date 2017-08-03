@@ -81,7 +81,7 @@ function getSelectedRows() {
 //ajax全局配置
 $.ajaxSetup({
 	dataType: "json",
-    contentType: "application/json",
+    //contentType: "application/json",
     cache: false,
     timeout: 60 * 60 * 1000
 });

@@ -16,6 +16,7 @@
       <div class="layui-form-item">
         <div class="layui-input-block">
           <select name="rolename" v-model="info.roleid" lay-filter="rolename">
+            <option value="">请选择</option>
             <option v-for="role in rolelist" :value="role.roleid">{{role.rolename}}</option>
           </select>
         </div>

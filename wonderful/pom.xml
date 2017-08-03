@@ -91,7 +91,12 @@
   <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId �?artifactId 即可 -->
   <!-- <dependencyManagement> -->
   <dependencies>
-
+    <!-- websocket -->
+    <dependency>
+    <groupId>org.apache.tomcat</groupId>
+    <artifactId>tomcat-websocket</artifactId>
+    <version>8.5.11</version>
+</dependency>
     <!-- junit -->
     <dependency>
       <groupId>junit</groupId>
@@ -493,6 +498,47 @@
         </configuration>
       </plugin>
     </plugins>
+
+    <!-- 打包注意啊啊啊啊 -->
+    <resources>
+      <resource>
+        <directory>src/main/java</directory>
+        <includes>
+          <!-- <include>**/*.java</include> -->
+          <include>**/*.xml</include>
+          <include>**/*.properties</include>
+        </includes>
+        <filtering>true</filtering>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.xml</include>
+          <include>**/*.properties</include>
+        </includes>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
   </build>
 
+  <profiles>
+    <profile>
+      <!-- 本地开发环境 -->
+      <id>dev</id>
+      <properties>
+        <profiles.active>dev</profiles.active>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+    </profile>
+    <profile>
+      <!-- 生产环境 -->
+      <id>pub</id>
+      <properties>
+        <profiles.active>pro</profiles.active>
+      </properties>
+    </profile>
+  </profiles>
 </project>

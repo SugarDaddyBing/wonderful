@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="../../../static/plugins/css/bootstrap.min.css">
+		<link rel="stylesheet" href="../../../static/plugins/css/font-awesome.css">
+		<link rel="stylesheet" href="../../../static/plugins/layui/css/layui.css">
+		<title>最菜的聊天室</title>
+	</head>
+
+	<body>
+		<form class="layui-form">
+			<div class="container" id="vuearea">
+
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<pre class="layui-code">{{showmsg}}</pre>
+					</div>
+				</div>
+				<div class="row clearfix">
+					<div class="col-md-12 column">
+						<textarea id="demo" style="display: none;"></textarea>
+						<script>
+							layui.use('layedit', function() {
+								var layedit = layui.layedit;
+								layedit.build('demo'); //建立编辑器
+							});
+						</script>
+					</div>
+				</div>
+			</div>
+		</form>
+	</body>
+	<script src="../../../static/plugins/layui/layui.js"></script>
+	<script src="../../../static/plugins/vue.min.js"></script>
+	<script>
+		layui.use(['code', 'form', 'layedit'], function() {
+			layui.code({
+				title: 'coder talking',
+				skin: 'notepad'
+			});
+			var form = layui.form();
+			window.form = layui.form();
+		});
+
+		var vm = new Vue({
+			el: '#vuearea',
+			data: {
+				showmsg: ['6']
+			},
+			methods: {
+				setMessageInnerHTML: function(item) {
+					vm.showmsg.push(item);
+				}
+			},
+			created: function() {
+				this.showmsg.push('Welcome to NewChar Chatroom');
+			},
+			updated: function() {
+				try {
+					window.form.render();
+				} catch(error) {
+
+				}
+			}
+		});
+
+		var websocket = null;
+		//判断当前浏览器是否支持WebSocket
+		if('WebSocket' in window) {
+			websocket = new WebSocket("ws://localhost:8090/ws.do");
+		} else {
+			alert('当前浏览器 Not support websocket')
+		}
+
+		//连接发生错误的回调方法
+		websocket.onerror = function() {
+			vm.setMessageInnerHTML("WebSocket连接发生错误");
+		};
+
+		//连接成功建立的回调方法
+		websocket.onopen = function() {
+			vm.setMessageInnerHTML("WebSocket连接成功");
+		}
+
+		//接收到消息的回调方法
+		websocket.onmessage = function(event) {
+			vm.setMessageInnerHTML(event.data);
+		}
+
+		//连接关闭的回调方法
+		websocket.onclose = function() {
+			vm.setMessageInnerHTML("WebSocket连接关闭");
+		}
+
+		//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+		window.onbeforeunload = function() {
+			closeWebSocket();
+		}
+	</script>
+
+</html>
