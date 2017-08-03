@@ -19,7 +19,7 @@
       <http port="8090" />
     </server>
     <!-- 该处填写eclipse生成项目的地址('\'符号不需要转译成'/') -->
-    <host id="" root-directory="D:\GitHub\wonderful\wonderful">
+    <host id="" root-directory="D:\codeRepository\github\wonderful\wonderful">
       <web-app id="/" root-directory="src/main/webapp" />
       <!-- <host-alias>interfacepassport.local.fang.com</host-alias> -->
       <!-- <access-log path-format="E:/logs/coupon.interface_access.log.%Y%m%d" format='%D %h %l %u %t "%r" %s %b "%{Referer}i"

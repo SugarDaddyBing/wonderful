@@ -5,17 +5,27 @@
 <meta charset="UTF-8">
 #parse("globalCss.html")
 </head>
+<style>
+  div#vuearea {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+</style>
 
 <body>
   <form class="layui-form">
     <div id="vuearea">
       <div class="layui-form-item">
+      	<label class="layui-form-label">用户：</label>
+      	<div class="layui-input-block">
         <label class="layui-form-label">{{info.email}}</label>
+        </div>
       </div>
 
       <div class="layui-form-item">
+        <label class="layui-form-label">角色：</label>
         <div class="layui-input-block">
-          <select name="rolename" v-model="info.roleid" lay-filter="rolename">
+          <select name="rolename" v-model="info.roleid" lay-filter="rolename" >
             <option value="">请选择</option>
             <option v-for="role in rolelist" :value="role.roleid">{{role.rolename}}</option>
           </select>
