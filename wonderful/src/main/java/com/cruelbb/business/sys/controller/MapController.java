@@ -1,4 +1,4 @@
-package com.cruelbb.business.sys.controller;
+	package com.cruelbb.business.sys.controller;
 
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;

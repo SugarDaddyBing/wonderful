@@ -1,103 +1,149 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="../../../static/plugins/css/bootstrap.min.css">
-		<link rel="stylesheet" href="../../../static/plugins/css/font-awesome.css">
-		<link rel="stylesheet" href="../../../static/plugins/layui/css/layui.css">
-		<title>最菜的聊天室</title>
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="../../../static/plugins/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../../static/plugins/css/font-awesome.css">
+	<link rel="stylesheet" href="../../../static/plugins/layui/css/layui.css">
+	<title>最菜的聊天室</title>
+	<style>
+		.line {
+			margin: 2px;
+			/* height: 28px; */
+			line-height: 28px;
+		}
 
-	<body>
-		<form class="layui-form">
-			<div class="container" id="vuearea">
+		.error-msg {
+			color: red;
+			text-align: center;
+			font-weight: bold;
+		}
+		#bottom-code {
+			height:58px;
+		}
+	</style>
+</head>
 
-				<div class="row clearfix">
-					<div class="col-md-12 column">
-						<pre class="layui-code">{{showmsg}}</pre>
-					</div>
-				</div>
-				<div class="row clearfix">
-					<div class="col-md-12 column">
-						<textarea id="demo" style="display: none;"></textarea>
-						<script>
-							layui.use('layedit', function() {
-								var layedit = layui.layedit;
-								layedit.build('demo'); //建立编辑器
-							});
-						</script>
+<body>
+	<form class="layui-form">
+		<div class="container" id="vuearea">
+
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<div class="layui-code" style="height: 400px; overflow-y: auto;word-break: break-all;">
+						<div id="bottom-code"></div>
 					</div>
 				</div>
 			</div>
-		</form>
-	</body>
-	<script src="../../../static/plugins/layui/layui.js"></script>
-	<script src="../../../static/plugins/vue.min.js"></script>
-	<script>
-		layui.use(['code', 'form', 'layedit'], function() {
-			layui.code({
-				title: 'coder talking',
-				skin: 'notepad'
-			});
-			var form = layui.form();
-			window.form = layui.form();
-		});
+			<div class="row clearfix">
+				<div class="col-md-12 column">
+					<textarea id="textInput" style="display: none;"></textarea>
+					<a href="javascript:" class="layui-btn" id="send" data-type="content">发送</a>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<script src="../../../static/plugins/jquery.min.js"></script>
+<script src="../../../static/plugins/layui/layui.js"></script>
+<script src="../../../static/plugins/vue.min.js"></script>
 
-		var vm = new Vue({
-			el: '#vuearea',
-			data: {
-				showmsg: ['6']
-			},
-			methods: {
-				setMessageInnerHTML: function(item) {
-					vm.showmsg.push(item);
-				}
-			},
-			created: function() {
-				this.showmsg.push('Welcome to NewChar Chatroom');
-			},
-			updated: function() {
-				try {
-					window.form.render();
-				} catch(error) {
+<script>
+	layui.use(['code', 'form', 'layedit'], function () {
+		// layui.code({
+		// 	title: 'coder talking',
+		// 	skin: 'notepad'
+		// });
+		var form = layui.form();
+		window.form = layui.form();
+		var layedit = layui.layedit;
+		var layeditId = layedit.build('textInput', { height: 100 }); //建立编辑器
 
-				}
+		//编辑器外部操作
+		var active = {
+			// text: function () {
+			// 	var item = layedit.getText(layeditId); //获取编辑器纯文本内容
+			// 	vm.showmsg.push(item);
+			// },
+			content: function () {
+				var item = layedit.getContent(layeditId); //获取编辑器内容
+				vm.setMessageInnerHTML(item);
 			}
+		}
+		$('#send').on('click', function () {
+			var type = $(this).data('type');
+			active[type] ? active[type].call(this) : '';
 		});
 
-		var websocket = null;
-		//判断当前浏览器是否支持WebSocket
-		if('WebSocket' in window) {
-			websocket = new WebSocket("ws://localhost:8090/ws.do");
-		} else {
-			alert('当前浏览器 Not support websocket')
-		}
+	});
 
-		//连接发生错误的回调方法
-		websocket.onerror = function() {
-			vm.setMessageInnerHTML("WebSocket连接发生错误");
-		};
+	var vm = new Vue({
+		el: '#vuearea',
+		data: {
+			showmsg: $('.layui-code')[0],
+			username:'Tom'
+		},
+		methods: {
+				setMessageInnerHTML: function (msg,className) {
+					className=className?className:''
+					var userTag='';
+					if(className==''){
+					userTag="<b>"+vm.username+"</b> <span style='color:blue;'>say:</span><br /> ";
+					}
+					var item = "<div class='line "+className+"'>" +userTag + msg + "</div>";
+					$('#bottom-code').before(item);
+					// document.getElementsByClassName('layui-code')[0].scrollTop = 
+					// document.getElementsByClassName('layui-code')[0].scrollHeight;
+					$('.layui-code')[0].scrollTop = $('.layui-code')[0].scrollHeight;
+				}
+			},
+		created: function () {
+			this.setMessageInnerHTML('Welcome to NewChar Chatroom',"error-msg");
+		},
+		updated: function () {
+			try {
+				window.form.render();
+			} catch (error) {
 
-		//连接成功建立的回调方法
-		websocket.onopen = function() {
-			vm.setMessageInnerHTML("WebSocket连接成功");
+			}
 		}
+	});
 
-		//接收到消息的回调方法
-		websocket.onmessage = function(event) {
-			vm.setMessageInnerHTML(event.data);
-		}
 
-		//连接关闭的回调方法
-		websocket.onclose = function() {
-			vm.setMessageInnerHTML("WebSocket连接关闭");
-		}
+	var websocket = null;
+	//判断当前浏览器是否支持WebSocket
+	if ('WebSocket' in window) {
+		websocket = new WebSocket("ws://localhost:8090/ws.do");
+	} else {
+		vm.setMessageInnerHTML('当前浏览器 Not support websocket',"error-msg");
+	}
 
-		//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-		window.onbeforeunload = function() {
-			closeWebSocket();
-		}
-	</script>
+	//连接发生错误的回调方法
+	websocket.onerror = function () {
+		vm.setMessageInnerHTML("WebSocket连接发生错误","error-msg");
+	};
+
+	//连接成功建立的回调方法
+	websocket.onopen = function () {
+		vm.setMessageInnerHTML("WebSocket连接成功","error-msg");
+	}
+
+	//接收到消息的回调方法
+	websocket.onmessage = function (event) {
+		vm.setMessageInnerHTML(event.data);
+	}
+
+	//连接关闭的回调方法
+	websocket.onclose = function () {
+		vm.setMessageInnerHTML("WebSocket连接关闭","error-msg");
+	}
+
+	//监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+	window.onbeforeunload = function () {
+		closeWebSocket();
+	}
+
+</script>
 
 </html>
